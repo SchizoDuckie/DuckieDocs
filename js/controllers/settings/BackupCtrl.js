@@ -30,7 +30,7 @@ DuckieDocs.controller('BackupCtrl', ["$scope", "$rootScope", "$dialogs", "$filte
         /**
          * Select all series from the database in the format described above, serialize them as a data uri string
          * that's set up on the $scope.backupString, so that it can be used as a trigger for
-         * <a ng-if="backupString" download="DuckieTV.backup" ng-href="{{ backupString }}">Backup ready! Click to download.</a>
+         * <a ng-if="backupString" download="DuckieDocs.backup" ng-href="{{ backupString }}">Backup ready! Click to download.</a>
          */
         $scope.createBackup = function() {
             $scope.backupTime = new Date();
