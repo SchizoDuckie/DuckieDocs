@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="DuckieDocs" ng-csp>
+<head>
+  <meta charset="UTF-8">
+  <title>DuckieDocs</title>
+  <!-- deploy:replace='<link rel="stylesheet" href="dist/style.css">' -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dialogs.css">
+  <link rel="stylesheet" href="css/flags.css">
+  <!-- /deploy:replace -->
+  <!-- deploy:replace='<link rel="stylesheet" media="print" href="dist/print.css">' -->
+  <link rel="stylesheet" media="print" href="css/print.css">
+  <!-- /deploy:replace -->
+  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
+</head>
+<body kc>
+ <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container-fluid" ui-view="main">
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-controller="ActionBarCtrl as actionbar">
+    <div id="actionbar">
+      <div class="logo" ui-sref="home" tooltip="Home!" tooltip-placement="right"></div>
+      <ul class="list-unstyled">
+        <li>
+          <a id="actionbar_home" class="glyphicon glyphicon-home" tooltip="Home" tooltip-placement="right" ng-click="actionbar.hidePanels();actionbar.go('home');" style="padding-left:20px;width:58px"></a>
+        </li>
+      </ul>
+    </div>
+  <div>
+  <sidepanel>
+    <div ui-view="sidePanel"></div>
+  </sidepanel>
+
+  <query-monitor ng-class="{show: queryStats.writesQueued - queryStats.writesExecuted > 1}" />
+  <img class='printlogo' src='img/icon64.png'>
+
+  <!-- deploy:replace='<script src="dist/deps.js"></script>' -->
+  <script src='./js/vendor/promise-3.2.0.js'></script>
+  <script src='./js/vendor/object-observe.min.js'></script>  
+  <script src='./js/vendor/CRUD.js'></script>
+  <script src='./js/vendor/CRUD.SqliteAdapter.js'></script>
+  <script src='./js/CRUD.entities.js'></script>
+  <script src="./js/vendor/angular.js"></script>
+  <script src="./js/vendor/angular-animate.min.js"></script>
+  <script src="./js/vendor/angular-sanitize.min.js"></script>
+  <script src="./js/vendor/ui-router.js"></script>
+  <script src="./js/vendor/ct-ui-router-extras.core.min.js"></script>  
+  <script src="./js/vendor/ct-ui-router-extras.sticky.min.js"></script>  
+ <!-- <script src="./js/vendor/ui-router-0.2.13.min.js"></script>  -->
+  <script src="./js/vendor/angular-xml.min.js"></script>
+  <script src='./js/vendor/ui-bootstrap-tpls-0.10.0.min.js'></script>
+  <script src='./js/vendor/tmhDynamicLocale.js'></script>  
+  <script src="./js/vendor/dialogs.js"></script>
+  <script src="./js/vendor/angular-translate.min.js"></script>
+  <script src="./js/vendor/angular-translate-loader-static-files.min.js"></script>
+  <script src="./js/vendor/angular-translate-handler-log.min.js"></script>
+  <!-- /deploy:replace -->
+  <!-- deploy:replace='<script src="dist/app.js"></script>' -->
+
+  <script src="./js/app.js"></script>
+
+  <script src="./js/crypto.js"></script>
+  <script src="./js/app.translate.js"></script>
+  <script src="./js/app.routes.js"></script>
+  <script src="./js/app.standalone.js"></script>
+
+  <script src="js/controllers/ActionBarCtrl.js"></script>
+  <script src="js/controllers/LoginCtrl.js"></script>
+  <script src="js/controllers/settings/DisplayCtrl.js"></script>
+  <script src="js/controllers/settings/BackupCtrl.js"></script>
+
+  <script src="./js/directives/focusWatch.js"></script>
+  <script src="./js/directives/sidePanel.js"></script>
+  <script src="./js/directives/queryMonitor.js"></script>
+  <script src="./js/services/SettingsService.js"></script>
+  <script src="./js/services/FileReader.js"></script>
+  <script src="./js/services/GoogleImages.js"></script>
+  <script src="./js/vendor/base64.js"></script>
+  <script src="./js/vendor/moment.min.js" async></script>
+  <!-- /deploy:replace -->
+
+</body>
+
+</html>

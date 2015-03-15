@@ -1,0 +1,6 @@
+{
+    "LOCALE": "Japanese",
+    "QUERYMONITOR/please-wait/lbl": "これが完了するまでDuckieDocsを閉じないでください",
+    "QUERYMONITOR/writing/lbl": "DBへの書き込み",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocsはまだデータベース操作を実行しています.あなたは本当に,このタブを閉じますか？",
+}

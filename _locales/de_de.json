@@ -1,0 +1,6 @@
+{
+    "LOCALE": "German",
+    "QUERYMONITOR/please-wait/lbl": "Bitte schliessen Sie DuckieDocs, bis dies geschehen ist",
+    "QUERYMONITOR/writing/lbl": "Das Schreiben auf den db",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocs noch Führen von Datenbankoperationen. Wollen Sie wirklich auf diese Registerkarte zu schließen?"
+}

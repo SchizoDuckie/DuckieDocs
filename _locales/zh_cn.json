@@ -1,0 +1,6 @@
+{
+    "LOCALE": "Simplified Chinese",
+    "QUERYMONITOR/please-wait/lbl": "请不要关闭DuckieDocs直到完成",
+    "QUERYMONITOR/writing/lbl": "写分贝",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocs仍执行数据库操作.你真的要关闭这个标签吗?",
+}

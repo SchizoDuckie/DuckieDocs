@@ -1,0 +1,6 @@
+{
+    "LOCALE": "American English",
+    "QUERYMONITOR/please-wait/lbl": "Please don't close DuckieDocs until this is done",
+    "QUERYMONITOR/writing/lbl": "Writing to db",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocs is still performing database operations. Do you really want to close this tab?"
+}

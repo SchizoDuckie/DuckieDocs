@@ -1,0 +1,6 @@
+{
+    "LOCALE": "Korean",
+    "QUERYMONITOR/please-wait/lbl": "이 작업이 완료 될 때까지 DuckieDocs을 닫지 마십시오",
+    "QUERYMONITOR/writing/lbl": "dB로 쓰기",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocs 여전히 데이터베이스 작업을 수행한다. 당신은 정말이 탭을 닫으시겠습니까?",
+}

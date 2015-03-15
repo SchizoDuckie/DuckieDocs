@@ -1,0 +1,17 @@
+<h1>Login</h1>
+
+<input ng-model="userModel.username">
+
+<input ng-model="userModel.password">
+<button ng-click="encrypt()">Encrypt</button>
+
+
+<p>Encrypted: 
+{{encrypted}}</p>
+
+<p>Decrypted:
+
+{{decrypted}}</p>
+
+<button ng-click="findDB()">Find DB</button>
+<p>Found db: {{foundDb}}</p>

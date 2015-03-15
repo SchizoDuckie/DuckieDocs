@@ -1,0 +1,6 @@
+{
+    "LOCALE": "Swedish",
+    "QUERYMONITOR/please-wait/lbl": "Stäng inte DuckieDocs förrän detta är gjort",
+    "QUERYMONITOR/writing/lbl": "Skriva för db",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocs fortfarande utföra databasåtgärder. Vill du verkligen stänga den här fliken?",
+}

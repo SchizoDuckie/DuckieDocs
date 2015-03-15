@@ -1,0 +1,6 @@
+{
+    "LOCALE": "Dutch",
+    "QUERYMONITOR/please-wait/lbl": "Sluit DuckieDocs niet af!",
+    "QUERYMONITOR/writing/lbl": "Schrijven naar db",
+    "QUERYMONITORjs/close-tab-prompt/lbl": "DuckieDocs is nog bezig met het uitvoeren van database operaties. Als je het programma nu sluit gaat er iets fout. Weet je zeker dat je DuckieDocs nu wil sluiten?",
+}
