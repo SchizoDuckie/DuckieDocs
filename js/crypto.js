@@ -3,6 +3,8 @@ DuckieDocs.factory('Security', function() {
     var crypto = require('crypto');
 
     var service = {
+        username: null,
+        password: null,
 
         sha1: function(string) {
             crypto.createHash('sha1').update(string).digest("hex")
@@ -79,9 +81,7 @@ DuckieDocs.factory('Security', function() {
 
                 var exec = require('child_process').exec;
                 var path = require('path')
-
                 var parentDir = path.resolve(process.cwd());
-
 
                 var cmd = path.resolve(parentDir + '/node_modules/sqlite3/sqlite3.exe');
                 var database = path.resolve(parentDir + '/webkit-data/databases/Databases.db');
@@ -99,14 +99,79 @@ DuckieDocs.factory('Security', function() {
             });
         },
 
+        isExistingUser: function(username) {
+            return service.query("SELECT rowid AS id, origin,name,description,estimated_size FROM Databases").then(function(rows) {
+                return rows.filter(function(row) {
+                    return row[2] == 'duckiedocs_' + username;
+                }).length == 1
+            })
+        },
+
+        decryptDatabase: function(username, password) {
+            return new Promise(function(resolve, reject) {
+                service.query("SELECT rowid FROM Databases where name=\'duckiedocs_" + username + "\'").then(function(result) {
+                    console.log("Database id : ", result, username, password);
+
+                    var path = require('path'),
+                        parentDir = path.resolve(process.cwd()),
+                        fs = require('fs'),
+                        encryptedDatabase = path.resolve(parentDir + '/webkit-data/databases/file__0/' + result[0][0]) + '.encrypted';
+
+                    var database = encryptedDatabase.replace('.encrypted', '');
+
+                    fs.exists(encryptedDatabase, function(exists) {
+                        if (exists) {
+                            service.decryptFile(encryptedDatabase, database, password).then(function(result) {
+                                debugger;
+                                resolve(true);
+                            })
+                        } else {
+                            console.log("No decrypted database found");
+                            resolve(true);
+                        }
+                    })
+
+                })
+
+            })
 
 
-        verifyDbExistence: function() {
-            service.query("SELECT rowid AS id, origin,name,description,estimated_size FROM Databases").then(function(row) {
-                console.log("Fetched db sqlite rows", row);
+
+        },
+
+        shutdown: function() {
+            return new Promise(function(resolve, reject) {
+                service.query("SELECT rowid FROM Databases where name=\'duckiedocs_" + service.username + "\'").then(function(result) {
+                    console.log("Database id : ", result, service.username, service.password);
+
+                    var path = require('path'),
+                        parentDir = path.resolve(process.cwd()),
+                        database = path.resolve(parentDir + '/webkit-data/databases/file__0/' + result[0][0]);
+
+                    var encryptedDatabase = database + '.encrypted';
+                    debugger;
+                    service.encryptFile(database, encryptedDatabase, service.password).then(function(result) {
+                        debugger;
+                        resolve(true);
+                    })
+
+                    console.log("Shutdown event! Cleanup database");
+                })
+
             })
         }
 
     };
     return service;
-});
+}).run(function(Security) {
+
+    require('nw.gui').Window.get().on('close', function() {
+        this.hide(); // Pretend to be closed already
+        Security.shutdown().then(function() {
+            console.log("Shutdown completed. closing app.");
+            this.close(true);
+            require('nw.gui').App.quit();
+        })
+    });
+
+})

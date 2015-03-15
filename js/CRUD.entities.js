@@ -176,7 +176,3 @@ var Company = CRUD.define({
 
 
 CRUD.DEBUG = true;
-
-CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_SchizoDuckie', {
-    estimatedSize: 25 * 1024 * 1024
-}));

@@ -9,9 +9,9 @@
 /** 
  * Root controller for settings pages
  */
-DuckieDocs.controller('SettingsCtrl', ["FavoritesService",
+DuckieDocs.controller('SettingsCtrl', [
 
-    function(FavoritesService) {
-        $scope.favorites = FavoritesService.favorites;
+    function() {
+
     }
 ]);

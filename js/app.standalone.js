@@ -5,25 +5,7 @@ if (navigator.userAgent.toUpperCase().indexOf('STANDALONE') != -1) {
 
     // Reference to window and tray
     var win = gui.Window.get();
-    var tray;
 
-    // Get the minimize event
-    win.on('minimize', function() {
-        // Hide window
-        this.hide();
-
-        // Show tray
-        tray = new gui.Tray({
-            icon: 'img/icon64.png'
-        });
-
-        // Show window and remove tray when clicked
-        tray.on('click', function() {
-            win.show();
-            this.remove();
-            tray = null;
-        });
-    });
 
     window.addEventListener('keydown', function(event) {
         switch (event.keyCode) {
