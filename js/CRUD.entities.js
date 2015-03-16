@@ -11,7 +11,7 @@ var Document = CRUD.define({
     className: 'Document',
     table: 'Documents',
     primary: 'ID_Document',
-    fields: ['ID_Document', 'ID_DocumentType', 'ID_Company', 'name', 'description', 'image', 'filepath', 'isConverted', 'lastAccessed', 'sha1hash', 'openedCount'],
+    fields: ['ID_Document', 'ID_DocumentType', 'ID_Company', 'name', 'description', 'image', 'filepath', 'isConverted', 'lastAccessed', 'openedCount'],
     relations: {
         'Company': CRUD.RELATION_FOREIGN,
         'Tag': CRUD.RELATION_MANY

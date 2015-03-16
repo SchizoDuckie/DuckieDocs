@@ -6,3 +6,13 @@
 </formly-form>
 
 <p ng-if="home.saved">Saved! {{home.uploadModel.ID_Document}}</p>
+
+
+<h1>Uploaded documents:</h1>
+
+<ul>
+<li ng-repeat="document in home.documents">
+	<strong>ID</strong>: {{document.ID_Document}}<br>
+	<strong>Name</strong>: {{document.name}}<br>
+	<strong>Path:</strong> {{ document.filepath}}</li>
+</ul>

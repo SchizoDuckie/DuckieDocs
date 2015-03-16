@@ -1,11 +1,18 @@
 DuckieDocs.controller('HomeCtrl', ["Security", "$scope",
     function(Security, $scope) {
 
+
+        var self = this;
+
         this.username = Security.username;
 
         this.saved = false;
 
         this.uploadModel = new Document();
+
+        this.documents = [];
+
+
 
         this.uploadFields = [{
             key: 'name',
@@ -25,8 +32,6 @@ DuckieDocs.controller('HomeCtrl', ["Security", "$scope",
             }
         }];
 
-        var self = this;
-
         this.upload = function() {
             var input = document.querySelector('input[type=file]');
             var files = input.files;
@@ -38,6 +43,10 @@ DuckieDocs.controller('HomeCtrl', ["Security", "$scope",
             });
 
         }
+
+        CRUD.Find('Document').then(function(documents) {
+            self.documents = documents;
+        })
 
     }
 ])
