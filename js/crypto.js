@@ -122,40 +122,39 @@ DuckieDocs.factory('Security', function() {
                     fs.exists(encryptedDatabase, function(exists) {
                         if (exists) {
                             service.decryptFile(encryptedDatabase, database, password).then(function(result) {
-                                debugger;
                                 resolve(true);
+                                fs.unlink(encryptedDatabase, function(result) {
+                                    console.log('deleted encrypted db');
+                                });
                             })
                         } else {
                             console.log("No decrypted database found");
                             resolve(true);
                         }
                     })
-
                 })
-
             })
-
-
-
         },
 
         shutdown: function() {
             return new Promise(function(resolve, reject) {
+                window.location.reload();
                 service.query("SELECT rowid FROM Databases where name=\'duckiedocs_" + service.username + "\'").then(function(result) {
-                    console.log("Database id : ", result, service.username, service.password);
 
                     var path = require('path'),
                         parentDir = path.resolve(process.cwd()),
                         database = path.resolve(parentDir + '/webkit-data/databases/file__0/' + result[0][0]);
 
                     var encryptedDatabase = database + '.encrypted';
-                    debugger;
                     service.encryptFile(database, encryptedDatabase, service.password).then(function(result) {
-                        debugger;
+                        console.log('Encryption done. removing original db.');
+                        require('del')(database, {
+                            force: true
+                        });
+                        console.log('unlink done', database);;
                         resolve(true);
                     })
-
-                    console.log("Shutdown event! Cleanup database");
+                    console.log("Shutdown event! Encrypt database");
                 })
 
             })
@@ -168,7 +167,7 @@ DuckieDocs.factory('Security', function() {
     require('nw.gui').Window.get().on('close', function() {
         this.hide(); // Pretend to be closed already
         Security.shutdown().then(function() {
-            console.log("Shutdown completed. closing app.");
+            console.log("Shutdown and encryption completed. closing app.");
             this.close(true);
             require('nw.gui').App.quit();
         })
