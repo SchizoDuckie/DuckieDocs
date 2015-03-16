@@ -12,8 +12,6 @@ DuckieDocs.controller('HomeCtrl', ["Security", "$scope",
 
         this.documents = [];
 
-
-
         this.uploadFields = [{
             key: 'name',
             type: 'input',
@@ -46,6 +44,7 @@ DuckieDocs.controller('HomeCtrl', ["Security", "$scope",
 
         CRUD.Find('Document').then(function(documents) {
             self.documents = documents;
+            $scope.$applyAsync();
         })
 
     }
