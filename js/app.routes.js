@@ -42,7 +42,8 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
             views: {
                 main: {
                     templateUrl: 'templates/login.html',
-                    controller: 'LoginCtrl'
+                    controller: 'LoginCtrl',
+                    controllerAs: 'login'
                 }
             }
         })
@@ -56,7 +57,8 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
             views: {
                 main: {
                     templateUrl: 'templates/home.html',
-                    controller: 'HomeCtrl'
+                    controller: 'HomeCtrl',
+                    controllerAs: 'home'
                 }
             }
         })

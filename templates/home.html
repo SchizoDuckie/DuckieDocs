@@ -1,0 +1,8 @@
+<h1>Welcome {{home.username}}</h1>
+
+
+<formly-form model="home.uploadModel" fields="home.uploadFields">
+  <button type="submit" class="btn btn-success" ng-click="home.upload()"><i class="glyphicon glyphicon-upload"></i> Upload</button>
+</formly-form>
+
+<p ng-if="home.saved">Saved! {{home.uploadModel.ID_Document}}</p>

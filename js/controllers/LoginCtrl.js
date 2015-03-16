@@ -2,55 +2,61 @@
  * Actionbar Controller
  */
 
-DuckieDocs.controller('LoginCtrl', ['$scope', 'Security',
+DuckieDocs.controller('LoginCtrl', ['Security', '$state',
+    function(Security, $state) {
+        this.encrypted = '';
 
-    function($scope, Security) {
-        $scope.encrypted = '';
-        $scope.userModel = {
+
+        this.userModel = {
             username: 'SchizoDuckie',
             password: 'changeme'
         }
 
-        $scope.encrypt = function() {
-            $scope.encrypted = Security.encrypt($scope.userModel.username, $scope.userModel.password);
+        this.userFields = [{
+            key: 'username',
+            type: 'input',
+            templateOptions: {
+                type: 'text',
+                label: 'User Name',
+                placeholder: 'Enter your username'
+            }
+        }, {
+            key: 'password',
+            type: 'input',
+            templateOptions: {
+                type: 'password',
+                label: 'Password',
+                placeholder: 'Password'
+            }
+        }];
 
-            $scope.decrypted = Security.decrypt($scope.encrypted, $scope.userModel.password);
 
-            Security.encryptFile('index.html', 'index.encrypted.html', $scope.userModel.password).then(function(result) {
-                console.log("File encrypted!", result);
+        var self = this;
 
-                Security.decryptFile(result, 'index.decrypted.html', $scope.userModel.password)
-            })
-        }
-
-        $scope.findDB = function() {
-            Security.verifyDbExistence();
-
-        }
-
-        $scope.login = function() {
+        this.login = function() {
             function openDatabase() {
-                CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_' + $scope.userModel.username, {
+                CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_' + self.userModel.username, {
                     estimatedSize: 512 * 1024 * 1024
                 }));
             }
 
-            Security.isExistingUser($scope.userModel.username).then(function(isExisting) {
+            Security.isExistingUser(self.userModel.username).then(function(isExisting) {
                 if (!isExisting) {
                     console.log("New user! Creating new database.");
                     openDatabase();
-                    Security.username = $scope.userModel.username;
-                    Security.password = $scope.userModel.password;
+                    Security.username = self.userModel.username;
+                    Security.password = self.userModel.password;
 
                 } else {
-                    Security.decryptDatabase($scope.userModel.username, $scope.userModel.password).then(function(success) {
-                        Security.username = $scope.userModel.username;
-                        Security.password = $scope.userModel.password;
+                    Security.decryptDatabase(self.userModel.username, self.userModel.password).then(function(success) {
+                        Security.username = self.userModel.username;
+                        Security.password = self.userModel.password;
                         console.log("Login success!", success);
                         openDatabase();
+                        $state.go('home');
                     }, function(error) {
                         console.error("Login error!", error);
-                        $scope.error = error;
+                        self.error = error;
                     })
                 }
             })

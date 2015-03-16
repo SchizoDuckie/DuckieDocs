@@ -1,20 +1,5 @@
-<h1>Login</h1>
+<h1>Login to DuckieDocs</h1>
 
-<input ng-model="userModel.username">
-
-<input ng-model="userModel.password">
-<button ng-click="login()">Login</button>
-
-
-<button ng-click="encrypt()">Encrypt</button>
-
-
-<p>Encrypted: 
-{{encrypted}}</p>
-
-<p>Decrypted:
-
-{{decrypted}}</p>
-
-<button ng-click="findDB()">Find DB</button>
-<p>Found db: {{foundDb}}</p>
+<formly-form model="login.userModel" fields="login.userFields">
+  <button type="submit" class="btn btn-success" ng-click="login.login()"><i class="glyphicon glyphicon-key"></i> Submit</button>
+</formly-form>

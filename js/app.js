@@ -10,5 +10,7 @@ var DuckieDocs = angular.module('DuckieDocs', [
     'tmh.dynamicLocale',
     'ui.bootstrap',
     'dialogs',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'formly',
+    'formlyBootstrap'
 ])

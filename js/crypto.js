@@ -138,6 +138,10 @@ DuckieDocs.factory('Security', function() {
 
         shutdown: function() {
             return new Promise(function(resolve, reject) {
+                if (service.username == null) {
+                    console.log("nothing to do!");
+                    resolve(true);
+                }
                 window.location.reload();
                 service.query("SELECT rowid FROM Databases where name=\'duckiedocs_" + service.username + "\'").then(function(result) {
 
