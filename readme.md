@@ -7,9 +7,9 @@ Ideas / prototyping/todo:
 
 - [ ] require creating a strong password on first login
 - [x] database tables: Docs, Tags, DocTags, Companies, DocsCompanies
-- [ ]extract text on upload http://git.macropus.org/2011/11/pdftotext/example/, (ocr, tesseract)
+- [ ] extract text on upload http://git.macropus.org/2011/11/pdftotext/example/, (ocr, tesseract)
 - [ ] store files in either default app dir in profile or set a custom location
-- [x]store password in memory
+- [x] store password in memory
 - [ ] upload files by dropping anywhere on page
 - [ ] create virtual folder structure for tags?
 - [x] use nw.js app location to decrypt sqlite database before opening it https://github.com/nwjs/nw.js/wiki/App
