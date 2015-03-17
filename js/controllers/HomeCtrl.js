@@ -30,35 +30,73 @@ DuckieDocs.controller('HomeCtrl', ["Security", "$scope",
             }
         }];
 
-        this.updateDocumentList = function() { 
-            CRUD.Find('Document').then(function(documents) {
-                self.documents = documents;
-                $scope.$applyAsync();
-            })
-        }
-
         this.upload = function() {
             var input = document.querySelector('input[type=file]');
             var files = input.files;
-            this.uploadModel.filepath = files[0].path;
-            if(!this.uploadModel.name) {
+            this.uploadModel.filepath = files[0].name;
+            if (!this.uploadModel.name) {
                 this.uploadModel.name = files[0].name;
             }
 
             this.uploadModel.Persist().then(function() {
                 console.log('done!', self);
                 self.saved = true;
-                $scope.$applyAsync();
+                Security.encryptFile(files[0].path, './documents/' + self.uploadModel.ID_Document + '-' + files[0].name + '.encrypted', Security.password);
 
-                self.uploadModel = new Document();
-                self.updateDocumentList();
+                if (files[0].path.indexOf('.pdf') > -1) {
+                    self.pdfToText(files[0].path).then(function(result) {
+                        self.uploadModel.isConverted = 1;
+                        self.uploadModel.description = result;
+                        self.uploadModel.Persist().then(function(result) {
+                            self.uploadModel = new Document();
+                            self.getDocumentsList();
+                        })
+                    });
+                }
+
+                $scope.$applyAsync();
             });
 
         }
 
-        this.updateDocumentList();
+        /**
+         * Extract text from PDFs with PDF.js
+         * Uses the demo pdf.js from https://mozilla.github.io/pdf.js/getting_started/
+         */
+        this.pdfToText = function(data) {
 
-        
+            PDFJS.workerSrc = 'js/vendor/pdf.worker.js';
+            PDFJS.cMapUrl = 'js/vendor/pdfjs/cmaps/';
+            PDFJS.cMapPacked = true;
+
+            return PDFJS.getDocument(data).then(function(pdf) {
+                var pages = [];
+                for (var i = 0; i < pdf.numPages; i++) {
+                    pages.push(i);
+                }
+                return Promise.all(pages.map(function(pageNumber) {
+                    return pdf.getPage(pageNumber + 1).then(function(page) {
+                        return page.getTextContent().then(function(textContent) {
+                            return textContent.items.map(function(item) {
+                                return item.str;
+                            }).join(' ');
+                        });
+                    });
+                })).then(function(pages) {
+                    return pages.join("\r\n");
+                });
+            });
+        }
+
+        this.getDocumentsList = function() {
+            CRUD.Find('Document').then(function(documents) {
+                self.documents = documents;
+                $scope.$applyAsync();
+            })
+        }
+
+        this.getDocumentsList();
+
 
     }
 ])
