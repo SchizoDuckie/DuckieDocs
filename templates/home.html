@@ -10,9 +10,21 @@
 
 <h1>Uploaded documents:</h1>
 
-<ul>
-<li ng-repeat="document in home.documents">
-	<strong>ID</strong>: {{document.ID_Document}}<br>
-	<strong>Name</strong>: {{document.name}}<br>
-	<strong>Path:</strong> {{ document.filepath}}</li>
+<table class="table table-condensed table-striped">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Path:</th>
+    </tr>
+</thead>
+<tbody>
+<tr ng-repeat="document in home.documents">
+
+	<td>{{document.ID_Document}}</td>
+	<td>{{document.name}}</td>
+	<td> {{ document.filepath}}</td>
 </ul>
+</tr>
+</tbody>
+</table>
