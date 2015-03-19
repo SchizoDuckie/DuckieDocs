@@ -53,6 +53,9 @@ DuckieDocs.controller('LoginCtrl', ['Security', '$state',
                         Security.password = self.userModel.password;
                         console.log("Login success!", success);
                         openDatabase();
+                        // only for development reloads. will be removed.
+                        localStorage.setItem('security.username', Security.username);
+                        localStorage.setItem('security.password', Security.password);
                         $state.go('home');
                     }, function(error) {
                         console.error("Login error!", error);
@@ -63,3 +66,21 @@ DuckieDocs.controller('LoginCtrl', ['Security', '$state',
         }
     }
 ])
+
+/**
+ * only for dev reloads. will be removed.
+ */
+.run(function(Security) {
+    if (localStorage.getItem('security.username')) {
+
+        Security.username = localStorage.getItem('security.username')
+        Security.password = localStorage.getItem('security.password')
+        Security.decryptDatabase(Security.username, Security.password).then(function(success) {
+
+            CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_' + localStorage.getItem('security.username'), {
+                estimatedSize: 512 * 1024 * 1024
+            }));
+
+        });
+    }
+})

@@ -29,6 +29,38 @@ if (navigator.userAgent.toUpperCase().indexOf('STANDALONE') != -1) {
         }
     });
 
+    window.ondragover = function(e) {
+        if (window.location.hash != '#/upload') {
+            window.location.hash = '#/upload';
+        }
+        e.preventDefault();
+        return false
+    };
+    window.ondrop = function(e) {
+        e.preventDefault();
+        return false
+    };
+
+    document.body.ondragover = function() {
+        this.className = 'draghover';
+        return false;
+    };
+    document.body.ondragleave = function() {
+        this.className = '';
+        return false;
+    };
+    document.body.ondrop = function(e) {
+        e.preventDefault();
+
+        $rootScope = angular.element(document.body).injector().get('$rootScope');
+        for (var i = 0; i < e.dataTransfer.files.length; ++i) {
+            $rootScope.$broadcast('handle:drag', e.dataTransfer.files[i]);
+        }
+        this.className = '';
+
+        return false;
+    };
+
     DuckieDocs.directive('target', function() {
         return {
             restrict: 'A',

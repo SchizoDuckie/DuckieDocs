@@ -25,6 +25,10 @@ body > .container {
     -webkit-transition: padding-top 0.2s ease-in;
 }
 
+html {
+    height: 100%;
+}
+
 input::-webkit-input-placeholder {
     font-style: italic;
     font-family:'bebasregular', helvetica, sans-serif;
@@ -43,6 +47,7 @@ body {
     background-repeat:no-repeat;
     font-family: helvetica, sans-serif;
     color: #444;
+    height: 100%;
 }
 
 h1, h2, h3 {
@@ -80,6 +85,20 @@ a:hover {
     background-color:#5C5C5C;
 }
 
+.draghover {
+    background-color: rgba(0,0,0, 0.4);
+}
+
+.draghover::before {
+    content: '➲';
+    position: fixed;
+    top: 0px;
+    right: 300px;
+    bottom:0px;
+    left:0px;
+    font-size:400px;
+    text-align: center;
+}
 
 query-monitor {
     position: fixed;
@@ -135,9 +154,10 @@ sidepanel > div {
     width: 800px;
     z-index: 850;
     color:white;
-    background-color: rgba(25,25,25,1);
+    background-color: rgba(25,25,25,0.9);
     -webkit-transform: translateX(800px);
     -webkit-transition: transform 0.3s ease-in;
+    padding:20px;
 }
 sidepanel > div.active {
     -webkit-transform: translateX(400px);   
@@ -360,4 +380,58 @@ sidepanel h1 {
     display: block;
     margin-top: 5px;
     margin-bottom: 0;
+}
+
+#actionbar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    height: 100%;
+    width: 58px;
+    -webkit-transition: background-color .5s;
+}
+#actionbar:hover {
+    background-color: rgb(26, 29, 31);
+}
+#actionbar .logo {
+    background-image: url("../img/icon64-inverted.png");
+    background-size: 48px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 58px;
+    height: 58px;
+    -webkit-transition: transform .6s ease;
+}
+#actionbar .logo:hover {
+    -webkit-transform: rotate(360deg);
+}
+#actionbar ul {
+    list-style-type:none;
+    margin-top: 50px;
+}
+
+#actionbar:hover a {
+    color: white;
+        text-shadow: 2px 2px rgba(25,25,25,0.8);
+
+}
+#actionbar a {
+    padding: 18px;
+    font-size: 2.2rem;
+    color: rgba(5,5,5,0.4);
+    text-decoration:none;
+}
+
+#actionbar a.active {
+     background-color: rgba(70,70,70,0.8);
+}
+
+#actionbar a:hover, #actionbar .logo:hover {
+    background-color: rgba(70,70,70,1);
+    -webkit-transition: background-color .5s;
+}
+#actionbar a:active, #actionbar .logo:active {
+    background-color: rgba(90,90,90,1);
+    -webkit-transition: background-color .125s;
 }

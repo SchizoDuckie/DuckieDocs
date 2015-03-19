@@ -1,13 +1,6 @@
 <h1>Welcome {{home.username}}</h1>
 
 
-<formly-form model="home.uploadModel" fields="home.uploadFields">
-  <button type="submit" class="btn btn-success" ng-click="home.upload()"><i class="glyphicon glyphicon-upload"></i> Upload</button>
-</formly-form>
-
-<p ng-if="home.saved">Saved! {{home.uploadModel.ID_Document}}</p>
-
-
 <h1>Uploaded documents:</h1>
 
 <table class="table table-condensed table-striped">
@@ -19,7 +12,7 @@
     </tr>
 </thead>
 <tbody>
-<tr ng-repeat="document in home.documents">
+<tr ng-repeat="document in home.documentsList.all">
 
 	<td>{{document.ID_Document}}</td>
 	<td>{{document.name}}</td>

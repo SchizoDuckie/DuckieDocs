@@ -14,7 +14,7 @@
   <!-- /deploy:replace -->
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
 </head>
-<body kc>
+<body>
  <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -31,7 +31,10 @@
       <div class="logo" ui-sref="home" tooltip="Home!" tooltip-placement="right"></div>
       <ul class="list-unstyled">
         <li>
-          <a id="actionbar_home" class="glyphicon glyphicon-home" tooltip="Home" tooltip-placement="right" ng-click="actionbar.hidePanels();actionbar.go('home');" style="padding-left:20px;width:58px"></a>
+          <a id="actionbar_home" class="glyphicon glyphicon-home" tooltip="Home" tooltip-placement="right" ng-click="actionbar.hidePanels();actionbar.go('home');"></a>
+        </li>
+        <li>
+          <a id="actionbar_upload" class="glyphicon glyphicon-upload" tooltip="Upload" tooltip-placement="right" ng-click="actionbar.go('upload');"></a>
         </li>
       </ul>
     </div>
@@ -80,12 +83,14 @@
   <script src="js/controllers/ActionBarCtrl.js"></script>
   <script src="js/controllers/LoginCtrl.js"></script>
   <script src="js/controllers/HomeCtrl.js"></script>
+  <script src="js/controllers/UploadCtrl.js"></script>
   <script src="js/controllers/settings/DisplayCtrl.js"></script>
   <script src="js/controllers/settings/BackupCtrl.js"></script>
 
   <script src="./js/directives/focusWatch.js"></script>
   <script src="./js/directives/sidePanel.js"></script>
   <script src="./js/directives/queryMonitor.js"></script>
+  <script src="./js/services/DocumentsList.js"></script>
   <script src="./js/services/SettingsService.js"></script>
   <script src="./js/services/FileReader.js"></script>
   <script src="./js/services/GoogleImages.js"></script>

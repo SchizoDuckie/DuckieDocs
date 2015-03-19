@@ -11,16 +11,45 @@ var Document = CRUD.define({
     className: 'Document',
     table: 'Documents',
     primary: 'ID_Document',
-    fields: ['ID_Document', 'ID_DocumentType', 'ID_Company', 'name', 'description', 'image', 'filepath', 'isConverted', 'lastAccessed', 'openedCount'],
+    fields: ['ID_Document', 'ID_DocumentType', 'ID_Company', 'ID_DocumentContent', 'name', 'description', 'image', 'filepath', 'isConverted', 'lastAccessed', 'openedCount'],
     relations: {
         'Company': CRUD.RELATION_FOREIGN,
-        'Tag': CRUD.RELATION_MANY
+        'Tag': CRUD.RELATION_MANY,
+        'DocumentContent': CRUD.RELATION_FOREIGN
     },
     indexes: [
         'name'
     ],
 
-    createStatement: 'CREATE TABLE "Documents" ("ID_Document" INTEGER PRIMARY KEY NOT NULL, "ID_DocumentType" INTEGER NULL, "ID_Company" INTEGER DEFAULT NULL, "name" varchar(255), "description" TEXT NULL, "image" VARCHAR(1024) NULL, "filepath" VARCHAR(1024) null, "isConverted" INTEGER(1) default 0, "lastAccessed" TIMESTAMP NULL, "openedCount" INTEGER DEFAULT 0 )',
+    createStatement: 'CREATE TABLE "Documents" ("ID_Document" INTEGER PRIMARY KEY NOT NULL, "ID_DocumentType" INTEGER NULL, "ID_Company" INTEGER DEFAULT NULL,  "ID_DocumentContent" INTEGER DEFAULT NULL,  "name" varchar(255), "description" TEXT NULL, "image" VARCHAR(1024) NULL, "filepath" VARCHAR(1024) null, "isConverted" INTEGER(1) default 0, "lastAccessed" TIMESTAMP NULL, "openedCount" INTEGER DEFAULT 0 )',
+    adapter: 'dbAdapter',
+    defaultValues: {
+
+    },
+    fixtures: [
+
+    ],
+    migrations: {
+
+    }
+
+}, {
+
+});
+
+var DocumentContent = CRUD.define({
+    className: 'DocumentContent',
+    table: 'DocumentContent',
+    primary: 'ID_DocumentContent',
+    fields: ['ID_DocumentContent', 'ID_Document', 'fulltext'],
+    relations: {
+        'Document': CRUD.RELATION_SINGLE
+    },
+    indexes: [
+        'ID_Document'
+    ],
+
+    createStatement: 'CREATE TABLE "DocumentContent" ("ID_DocumentContent" INTEGER PRIMARY KEY NOT NULL, "ID_Document" INTEGER NOT NULL, "fulltext" TEXT)',
     adapter: 'dbAdapter',
     defaultValues: {
 

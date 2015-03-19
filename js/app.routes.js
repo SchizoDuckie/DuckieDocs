@@ -63,6 +63,25 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
             }
         })
 
+        .state('upload', {
+            url: '/upload',
+            resolve: {
+                SidePanelState: showSidePanel
+            },
+            views: {
+                main: {
+                    templateUrl: 'templates/home.html',
+                    controller: 'HomeCtrl',
+                    controllerAs: 'home'
+                },
+                sidePanel: {
+                    templateUrl: 'templates/upload.html',
+                    controller: 'UploadCtrl',
+                    controllerAs: 'upload'
+                }
+            }
+        })
+
 
 
         .state('settings', {

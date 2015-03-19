@@ -6,13 +6,10 @@ DuckieDocs.factory('SidePanelState', function() {
             isExpanded: false
         },
         show: function() {
-            document.body.style.overflowY = 'hidden';
-            document.body.scrollTop = 0;
             service.state.isShowing = true;
             service.state.isExpanded = false;
         },
         hide: function() {
-            document.body.style.overflowY = 'auto';
             service.state.isShowing = false;
             service.state.isExpanded = false;
         },

@@ -36,7 +36,7 @@
         "title": "DuckieDocs Standalone v0.1",
         "always-on-top": false,
         "frame": true,
-        "height": 750,
+    "height": 850,
         "min_height": 400,
         "visible": true,
         "as_desktop": false,
@@ -46,7 +46,7 @@
         "show_in_taskbar": true,
         "mac_app_icon": "",
         "exe_icon": "C:/xampp/htdocs/deploy/duckiedocs/img/icon128.png",
-        "width": 1000,
+        "width": 1600,
         "toolbar": false,
         "icon": "C:/xampp/htdocs/deploy/duckiedocs/img/icon128.png"
     },

@@ -142,6 +142,9 @@ DuckieDocs.factory('Security', function() {
                     console.log("nothing to do!");
                     resolve(true);
                 }
+
+                localStorage.removeItem('security.username');
+                localStorage.removeItem('security.password');
                 window.location.reload();
                 service.query("SELECT rowid FROM Databases where name=\'duckiedocs_" + service.username + "\'").then(function(result) {
 

@@ -1,0 +1,13 @@
+<div class="leftpanel">
+<h3>Upload a document</h3>
+<formly-form model="upload.uploadModel" fields="upload.uploadFields">
+  <button type="submit" class="btn btn-success" ng-click="upload.upload()"><i class="glyphicon glyphicon-upload"></i> Upload</button>
+</formly-form>
+
+<p ng-if="home.saved">Saved! {{upload.uploadModel.ID_Document}}</p>
+
+</div>
+<div class="rightpanel">
+<h1>Right</h1>
+
+</div>
