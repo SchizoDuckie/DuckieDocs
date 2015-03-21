@@ -34,17 +34,22 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
 
 
         this.persist = function(doc, file) {
-            doc.Persist().then(function() {
-                doc.filepath = file.path;
-                if (!doc.name) {
-                    doc.name = file.name;
-                }
+
+            if (!doc.name) {
+                doc.name = file.name;
+            }
+
+            doc.Persist().then(function(res) {
+
+                var filepath = doc.filepath = '/documents/' + doc.getID() + '-' + file.name;
+                Security.encryptFile(file.path, require('path').resolve(process.cwd()) + filepath + '.encrypted', Security.password);
                 self.saved = true;
-                Security.encryptFile(file.path, './documents/' + doc.ID_Document + '-' + file.name + '.encrypted', Security.password);
+
 
                 if (file.path.indexOf('.pdf') > -1) {
-                    self.pdfToText(file.path).then(function(result) {
+                    self.pdfToText(file.path, filepath + '.png').then(function(result) {
                         doc.isConverted = 1;
+                        doc.image = filepath + '.png';
                         doc.Persist().then(function() {
                             var content = new DocumentContent();
                             content.fulltext = result;
@@ -55,7 +60,6 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                             })
 
                             DocumentsList.refresh();
-
                         })
 
                     });
@@ -77,13 +81,13 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
          * Extract text from PDFs with PDF.js
          * Uses the demo pdf.js from https://mozilla.github.io/pdf.js/getting_started/
          */
-        this.pdfToText = function(data) {
+        this.pdfToText = function(pdfPath, imagePath) {
 
             PDFJS.workerSrc = 'js/vendor/pdf.worker.js';
             PDFJS.cMapUrl = 'js/vendor/pdfjs/cmaps/';
             PDFJS.cMapPacked = true;
 
-            function createThumbnail(page) {
+            function createThumbnail(page, imagePath) {
                 var viewport = page.getViewport(0.5);
                 var canvas = document.createElement('canvas');
                 var ctx = canvas.getContext('2d');
@@ -100,16 +104,18 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                     var img = document.createElement('img');
                     img.src = canvas.toDataURL();
                     document.body.appendChild(img);
-                });
 
+                    require('fs').writeFile(require('path').resolve(process.cwd()) + imagePath, new Buffer(canvas.toDataURL().replace(/^data:image\/\w+;base64,/, ""), 'base64'));
+
+                });
             }
 
-            return PDFJS.getDocument(data).then(function(pdf) { //read pdf into memory
+            return PDFJS.getDocument(pdfPath).then(function(pdf) { //read pdf into memory
                 var pages = new Array(pdf.numPages).toString().split(','); // create a new array as much values as pages
                 return Promise.all(pages.map(function(str, pageNumber) { //iterate these numbers
                     return pdf.getPage(pageNumber + 1).then(function(page) { // grab page handle
                         console.log('Process page: ', pageNumber);
-                        if (pageNumber == 0) createThumbnail(page); // create thumb nail for first page.
+                        if (pageNumber == 0) createThumbnail(page, imagePath); // create thumb nail for first page.
                         return page.getTextContent().then(function(textContent) { // fetch textcontent from page
                             return textContent.items.map(function(item) { // join all text on page by ' '
                                 return item.str;
