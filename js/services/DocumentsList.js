@@ -14,7 +14,9 @@ DuckieDocs.factory('DocumentsList', ["$rootScope",
 
             refresh: function() {
                 getDocumentsList().then(function() {
-                    $rootScope.$applyAsync();
+                    setTimeout(function() {
+                        $rootScope.$applyAsync();
+                    })
                 })
             }
 

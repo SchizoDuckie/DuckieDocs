@@ -3,21 +3,7 @@
 
 <h1>Uploaded documents:</h1>
 
-<table class="table table-condensed table-striped">
-<thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Path:</th>
-    </tr>
-</thead>
-<tbody>
-<tr ng-repeat="document in home.documentsList.all">
-
-	<td>{{document.ID_Document}}</td>
-	<td>{{document.name}}</td>
-	<td> {{ document.filepath}}</td>
-</ul>
-</tr>
-</tbody>
-</table>
+<div ng-repeat="document in home.documentsList.all" class="document">
+	<img src=".{{ document.image}}">
+	<strong>{{document.name}}</strong>
+</div>

@@ -435,3 +435,25 @@ sidepanel h1 {
     background-color: rgba(90,90,90,1);
     -webkit-transition: background-color .125s;
 }
+
+
+.document {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: rgba(25,25,25,0.1);
+    margin: 20px;
+    height: 300px;
+    position: relative;
+}
+
+.document img {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+}
+
+.document strong {
+    position: absolute;
+    bottom:0px;
+    left:0px;
+}

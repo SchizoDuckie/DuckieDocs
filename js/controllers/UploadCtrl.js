@@ -5,6 +5,8 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
 
         this.uploadModel = new Document();
 
+        this.uploadQueue = [];
+
         this.documents = [];
 
         this.uploadFields = [{
@@ -74,7 +76,10 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
          */
         $rootScope.$on('handle:drag', function(evt, file) {
             console.log("Drop detected", file);
-            self.persist(new Document(), file);
+            var doc = new Document();
+            self.uploadQueue.push(doc);
+            self.persist(doc, file);
+            $scope.$applyAsync();
         })
 
         /**
@@ -101,10 +106,6 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                     ctx.globalCompositeOperation = "destination-over";
                     ctx.fillStyle = "#ffffff";
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    var img = document.createElement('img');
-                    img.src = canvas.toDataURL();
-                    document.body.appendChild(img);
-
                     require('fs').writeFile(require('path').resolve(process.cwd()) + imagePath, new Buffer(canvas.toDataURL().replace(/^data:image\/\w+;base64,/, ""), 'base64'));
 
                 });
@@ -119,7 +120,7 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                         return page.getTextContent().then(function(textContent) { // fetch textcontent from page
                             return textContent.items.map(function(item) { // join all text on page by ' '
                                 return item.str;
-                            }).join(' ');
+                            }).join('');
                         });
                     });
                 })).then(function(pages) { // join pages array, end chain. 
