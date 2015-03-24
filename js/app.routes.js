@@ -63,6 +63,47 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
             }
         })
 
+
+        .state('document', {
+            url: '/document/:id',
+            resolve: {
+                SidePanelState: showSidePanel,
+                Document: function($stateParams) {
+                    return CRUD.FindOne('Document', {
+                        ID_Document: $stateParams.id
+                    })
+                }
+            },
+            views: {
+                main: {
+                    templateUrl: 'templates/document.html',
+                    controller: 'DocumentCtrl',
+                    controllerAs: 'vm'
+                },
+                sidePanel: {
+                    templateUrl: 'templates/sidepanel/document.html',
+                    controller: 'SidepanelDocumentCtrl',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('companies', {
+            url: '/companies',
+            resolve: {
+                Companies: function() {
+                    return CRUD.Find('Company', {})
+                }
+            },
+            views: {
+                main: {
+                    templateUrl: 'templates/companies.html',
+                    controller: 'CompaniesCtrl',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
         .state('upload', {
             url: '/upload',
             resolve: {

@@ -1,5 +1,5 @@
-DuckieDocs.controller('HomeCtrl', ["Security", "DocumentsList", "$scope",
-    function(Security, DocumentsList, $scope) {
+DuckieDocs.controller('HomeCtrl', ["Security", "DocumentsList", "$scope", "$state",
+    function(Security, DocumentsList, $scope, $state) {
 
         var self = this;
 
@@ -10,6 +10,13 @@ DuckieDocs.controller('HomeCtrl', ["Security", "DocumentsList", "$scope",
         setTimeout(function() {
             DocumentsList.refresh();
         }, 500)
+
+        this.go = function(doc) {
+            $state.go('document', {
+                id: doc.ID_Document
+            });
+
+        }
 
 
     }

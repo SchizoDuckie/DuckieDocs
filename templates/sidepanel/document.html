@@ -1,0 +1,29 @@
+<div class="leftpanel buttons">
+
+<h1>Document sidepanel</h1>
+
+<h1>Company: </h1>
+name: {{ vm.Company.name }} <br>
+
+<button class="btn btn-info" ng-click="editCompany=true; vm.refresh();">Edit</button>
+
+<div ng-if="!vm.Document.ID_Company || editCompany">
+<strong>No company attached yet!</strong>
+<formly-form model="vm.Company" fields="vm.companyFields">
+  <button type="submit" class="btn btn-success" ng-click="vm.saveCompany(); editCompany=false;"><i class="glyphicon glyphicon-key"></i> Save and connect company</button>
+</formly-form>
+
+<button class="btn btn-success" ng-click="vm.findLogo()">Find Logo</button>
+
+
+	
+<button class="btn btn-success" ng-click="showCompanySelector= true">Connect now</button>
+</div>
+
+<strong>Images:</strong>
+<img ng-repeat="image in vm.imageSuggestions" src='{{image}}' ng-click="selectImage(image)">
+
+<crud-relation-selector from="vm.Document" targetEntity="Company" allow-create="true"></relation-selector>
+
+
+</div>

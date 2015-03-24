@@ -36,6 +36,12 @@
         <li>
           <a id="actionbar_upload" class="glyphicon glyphicon-upload" tooltip="Upload" tooltip-placement="right" ng-click="actionbar.go('upload');"></a>
         </li>
+
+         <li>
+          <a id="actionbar_companies" class="glyphicon glyphicon-book" tooltip="Companies" tooltip-placement="right" ng-click="actionbar.go('companies');"></a>
+        </li>
+
+        
       </ul>
     </div>
   <div>
@@ -77,13 +83,15 @@
 
   <script src="./js/crypto.js"></script>
   <script src="./js/app.translate.js"></script>
-  <script src="./js/app.routes.js"></script>
   <script src="./js/app.standalone.js"></script>
 
   <script src="js/controllers/ActionBarCtrl.js"></script>
+  <script src="js/controllers/CompaniesCtrl.js"></script>
+  <script src="js/controllers/DocumentCtrl.js"></script>
   <script src="js/controllers/LoginCtrl.js"></script>
   <script src="js/controllers/HomeCtrl.js"></script>
   <script src="js/controllers/UploadCtrl.js"></script>
+  <script src="js/controllers/sidepanel/SidepanelDocumentCtrl.js"></script>
   <script src="js/controllers/settings/DisplayCtrl.js"></script>
   <script src="js/controllers/settings/BackupCtrl.js"></script>
 
@@ -96,6 +104,9 @@
   <script src="./js/services/GoogleImages.js"></script>
   <script src="./js/vendor/base64.js"></script>
   <script src="./js/vendor/moment.min.js" async></script>
+
+  <script src="./js/app.routes.js"></script>
+  
 
   <script src="./js/vendor/pdf.js" async></script>
   <!-- /deploy:replace -->

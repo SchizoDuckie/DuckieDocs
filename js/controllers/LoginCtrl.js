@@ -34,12 +34,22 @@ DuckieDocs.controller('LoginCtrl', ['Security', '$state',
         var self = this;
 
         this.login = function() {
+            //autologin development hack.
+            Security.username = self.userModel.username;
+            Security.password = self.userModel.password;
+            localStorage.setItem('security.username', Security.username);
+            localStorage.setItem('security.password', Security.password);
+
+
             function openDatabase() {
                 CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_' + self.userModel.username, {
                     estimatedSize: 512 * 1024 * 1024
                 }));
             }
 
+            openDatabase();
+
+            $state.go('home');
             Security.isExistingUser(self.userModel.username).then(function(isExisting) {
                 if (!isExisting) {
                     console.log("New user! Creating new database.");
@@ -73,14 +83,13 @@ DuckieDocs.controller('LoginCtrl', ['Security', '$state',
 .run(function(Security) {
     if (localStorage.getItem('security.username')) {
 
+
         Security.username = localStorage.getItem('security.username')
         Security.password = localStorage.getItem('security.password')
-        Security.decryptDatabase(Security.username, Security.password).then(function(success) {
 
-            CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_' + localStorage.getItem('security.username'), {
-                estimatedSize: 512 * 1024 * 1024
-            }));
+        CRUD.setAdapter(new CRUD.SQLiteAdapter('duckiedocs_' + Security.username, {
+            estimatedSize: 512 * 1024 * 1024
+        }));
 
-        });
     }
 })

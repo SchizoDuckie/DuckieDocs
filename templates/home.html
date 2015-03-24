@@ -3,7 +3,7 @@
 
 <h1>Uploaded documents:</h1>
 
-<div ng-repeat="document in home.documentsList.all" class="document">
+<div ng-repeat="document in home.documentsList.all" class="document" ng-click="home.go(document)">
 	<img src=".{{ document.image}}">
 	<strong>{{document.name}}</strong>
 </div>

@@ -231,13 +231,14 @@ CRUD.ConnectionAdapter = function(endpoint, options) {
         debugger;
     };
     this.Find = function(what, filters, sorting, justthese, options, filters) {
-        CRUD.log("The Find method for your connection adaptor is not!");
+        CRUD.log("The Find method for your connection adaptor is not implemented!");
         debugger;
     };
     return this;
 };
 
 CRUD.Entity = function(className, methods) {
+    methods = methods || {};
     this.className = className;
     this.values = {};
     this.changedValues = {};
