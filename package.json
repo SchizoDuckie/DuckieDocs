@@ -39,7 +39,7 @@
     "height": 850,
         "min_height": 400,
         "visible": true,
-        "as_desktop": false,
+        "as_desktop": true,
         "mac_icon": "C:/xampp/htdocs/deploy/duckiedocs/img/icon128.png",
         "min_width": 600,
         "position": "center",

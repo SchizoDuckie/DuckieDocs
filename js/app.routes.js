@@ -115,7 +115,7 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
                     });
                 },
                 Documents: function($stateParams) {
-                    return CRUD.Findl('Document', {
+                    return CRUD.Find('Document', {
                         ID_Company: $stateParams.id
                     });
                 }
@@ -131,6 +131,7 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
 
         .state('search', {
             url: '/search',
+            sticky: true,
             resolve: {
                 SidePanelState: hideSidePanel
             },

@@ -16,6 +16,7 @@ DuckieDocs.controller('CompaniesCtrl', ['Companies', '$scope', '$state',
             $state.go('company', {
                 id: company.ID_Company
             });
+
         }
     }
 ]);
