@@ -4,6 +4,7 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
 
         this.Document = Document;
         this.Company = null;
+        this.companies = [];
         this.imageSuggestions = [];
 
         if (this.Document.ID_Company == null) {
@@ -17,8 +18,42 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
             })
         }
 
-        this.refresh = function() {
-            //debugger;
+        this.selectCompany = function(company) {
+            this.Document.ID_Company = company.ID_Company;
+            this.Document.Persist();
+            this.Company = company;
+            $scope.$applyAsync();
+        }
+
+        this.selectImage = function(image) {
+            console.log("Select company image!", image);
+            var path = require('path'),
+                fs = require('fs'),
+                baseDir = path.resolve(process.cwd()),
+                path = baseDir + '/documents/CompanyImages',
+                fileName = this.Company.ID_Company + '-' + new Date().getTime() + '.png';
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path);
+            }
+            var file = fs.createWriteStream(path + '/' + fileName);
+            file.on('finish', function() {
+                file.close(function() {
+                    vm.Company.image = fileName;
+                    vm.Company.Persist();
+                    $scope.$applyAsync();
+                });
+            });
+            require(image.indexOf('https') == 0 ? 'https' : 'http').get(image, function(response) {
+                response.pipe(file);
+            });
+        }
+
+        this.getCompanyList = function() {
+            CRUD.Find('Company').then(function(result) {
+                vm.companies = result;
+                $scope.$applyAsync();
+            });
         }
 
         this.findLogo = function() {
@@ -59,14 +94,6 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
                 type: 'text',
                 label: 'Country',
                 placeholder: 'NomansLand'
-            }
-        }, {
-            key: 'image',
-            type: 'input',
-            templateOptions: {
-                type: 'url',
-                label: 'image',
-                placeholder: 'select image'
             }
         }];
 

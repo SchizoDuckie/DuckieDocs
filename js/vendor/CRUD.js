@@ -184,6 +184,51 @@ CRUD.Find = function(obj, filters, options) {
     })
 };
 
+CRUD.FindCount = function(obj, filters, options) {
+    var type = false;
+
+    if (obj.toString() == 'CRUD') {
+        type = obj.getType();
+
+        if (obj.getID() !== false) {
+            CRUD.log("Object has an ID! ", ID, type);
+            filters.ID = obj.getID();
+            filters.type = filters
+        }
+    } else {
+        if (typeof obj == "function") {
+            try {
+                obj = new obj();
+                type = obj.className;
+            } catch (E) {}
+        } else if (typeof obj == "string") {
+            type = obj;
+        }
+
+    }
+    if (!(type in CRUD.EntityManager.entities)) {
+        CRUD.log("CRUD.Find cannot search for non-CRUD objects like " + obj + "!", filters, options);
+        return false;
+    }
+
+    var extras = [];
+    options = options || {};
+    if (options && options.limit) {
+        extras.limit = (options.start || 0) + "," + options.limit;
+        delete options.limit;
+    }
+    if (options && options.order) {
+        extras.order = options.order;
+        delete options.order;
+    }
+    if (options && options.group) {
+        extras.group = options.group;
+        delete options.group;
+    }
+    var justthese = options.justthese || [];
+    return CRUD.EntityManager.getAdapter().FindCount(type, filters, extras, justthese, options);
+}
+
 /** 
  * Uses CRUD.find with a limit 0,1 and returns the first result.
  * @returns Promise

@@ -1,29 +1,44 @@
 <div class="leftpanel buttons">
 
-<h1>Document sidepanel</h1>
+<h4>Company: </h4>
+<h1>{{ vm.Company.name }} </h1>
 
-<h1>Company: </h1>
-name: {{ vm.Company.name }} <br>
+<img ng-if="vm.Company.image" src="./documents/CompanyImages/{{vm.Company.image}}">
 
-<button class="btn btn-info" ng-click="editCompany=true; vm.refresh();">Edit</button>
+<hr>
 
-<div ng-if="!vm.Document.ID_Company || editCompany">
-<strong>No company attached yet!</strong>
-<formly-form model="vm.Company" fields="vm.companyFields">
-  <button type="submit" class="btn btn-success" ng-click="vm.saveCompany(); editCompany=false;"><i class="glyphicon glyphicon-key"></i> Save and connect company</button>
-</formly-form>
-
-<button class="btn btn-success" ng-click="vm.findLogo()">Find Logo</button>
-
-
-	
-<button class="btn btn-success" ng-click="showCompanySelector= true">Connect now</button>
+<div ng-if="!vm.Document.ID_Company">
+	<strong>No company attached yet!</strong>
+	<button class="btn btn-info" ng-click="vm.getCompanyList(); vm.showCompanySelector = true; vm.editCompany = true; vm.addCompany=false">Edit</button>
 </div>
 
-<strong>Images:</strong>
-<img ng-repeat="image in vm.imageSuggestions" src='{{image}}' ng-click="selectImage(image)">
+<button class="btn btn-info" ng-if="!vm.addCompany && vm.Company.ID_Company" ng-click="vm.addCompany=true">Edit</button>
 
-<crud-relation-selector from="vm.Document" targetEntity="Company" allow-create="true"></relation-selector>
+	<formly-form ng-if="vm.addCompany || vm.Company.ID_Company && vm.editCompany" model="vm.Company" fields="vm.companyFields">
+
+		<button ng-if="vm.Company && vm.Company.ID_Company" class="btn btn-success" ng-click="vm.findLogo(); vm.showLogoSearch=true"><i class="glyphicon glyphicon-search"></i> Find Logo</button>
+
+
+	  	<button type="submit" class="btn btn-success" ng-click="vm.saveCompany(); editCompany=false;"><i class="glyphicon glyphicon-key"></i> Save </button>
+
+	</formly-form>
+	
+
+	<div ng-if="vm.showCompanySelector == true">
+		<strong>Select company</strong>
+		<ul>
+			<li ng-click="vm.addCompany=true; vm.showCompanySelector=false;"><a class="btn btn-success">Create a new company</a></li>
+			<li ng-repeat="company in vm.companies"><a ng-click="vm.showCompanySelector = false; vm.selectCompany(company);"><img ng-if="company.image" src="./documents/CompanyImages/{{company.image}}" style="height:30px; float:left; display:inline-block;  margin-top: -5px;  border-radius: 5px;"> {{company.name}} </a></li>
+		</ul>
+	</div>
+
+
+<div ng-if="vm.showLogoSearch">
+		<h3>Found logo suggestions:</h3>
+		<img ng-repeat="image in vm.imageSuggestions" src='{{image}}' ng-click="vm.showLogoSearch=false; vm.selectImage(image); ">
+	</div>
+
+
 
 
 </div>

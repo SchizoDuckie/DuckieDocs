@@ -3,6 +3,5 @@ DuckieDocs.controller('DocumentCtrl', ['$state', 'Document',
 
         this.Document = Document;
 
-
     }
 ]);

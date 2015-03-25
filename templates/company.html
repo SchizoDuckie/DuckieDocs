@@ -1,0 +1,8 @@
+<h1>{{vm.Company.name }}</h1>
+
+<h1>Documents</h1>
+
+<div ng-repeat="document in vm.Documents" class="document" ng-click="vm.go(document)">
+	<img src=".{{ document.image}}">
+	<strong>{{document.name}}</strong>
+</div>

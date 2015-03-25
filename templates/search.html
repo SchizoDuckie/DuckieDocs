@@ -1,0 +1,11 @@
+<h1>Find a Document</h1>
+
+<formly-form model="vm.searchModel" fields="vm.searchFields">
+  <button type="submit" class="btn btn-success" ng-click="vm.search()"><i class="glyphicon glyphicon-search"></i> Search</button>
+</formly-form>
+
+
+<div ng-repeat="document in vm.searchResults" class="document" ng-click="vm.go(document)">
+	<img src=".{{ document.image}}">
+	<strong>{{document.name}}</strong>
+</div>

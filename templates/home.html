@@ -6,4 +6,5 @@
 <div ng-repeat="document in home.documentsList.all" class="document" ng-click="home.go(document)">
 	<img src=".{{ document.image}}">
 	<strong>{{document.name}}</strong>
+	<p ng-if="!document.ID_Company" class="alert alert-info">No company attached yet</p>
 </div>

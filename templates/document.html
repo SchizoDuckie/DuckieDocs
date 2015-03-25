@@ -3,7 +3,8 @@
 <strong>Filename: </strong>{{ vm.Document.filepath }}<br>
 <strong>Description: </strong>{{ vm.Document.description }}
 <h3>Company:</h3>
-[edit]
+{{ vm.Company.name }}
+<img ng-if="vm.Company.image" src="./documents/CompanyImages/{{vm.Company.image}}">
 
 <h3>Tags:</h3>
 [add]

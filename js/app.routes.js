@@ -91,6 +91,7 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
         .state('companies', {
             url: '/companies',
             resolve: {
+                SidePanelState: hideSidePanel,
                 Companies: function() {
                     return CRUD.Find('Company', {})
                 }
@@ -99,6 +100,44 @@ DuckieDocs.config(["$stateProvider", "$urlRouterProvider",
                 main: {
                     templateUrl: 'templates/companies.html',
                     controller: 'CompaniesCtrl',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('company', {
+            url: '/company/:id',
+            resolve: {
+                SidePanelState: hideSidePanel,
+                Company: function($stateParams) {
+                    return CRUD.FindOne('Company', {
+                        ID_Company: $stateParams.id
+                    });
+                },
+                Documents: function($stateParams) {
+                    return CRUD.Findl('Document', {
+                        ID_Company: $stateParams.id
+                    });
+                }
+            },
+            views: {
+                main: {
+                    templateUrl: 'templates/company.html',
+                    controller: 'CompanyCtrl',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('search', {
+            url: '/search',
+            resolve: {
+                SidePanelState: hideSidePanel
+            },
+            views: {
+                main: {
+                    templateUrl: 'templates/search.html',
+                    controller: 'SearchCtrl',
                     controllerAs: 'vm'
                 }
             }

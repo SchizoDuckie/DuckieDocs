@@ -65,6 +65,31 @@ var DocumentContent = CRUD.define({
 
 });
 
+var FullTextSearch = CRUD.define({
+    className: 'FullTextSearch',
+    table: 'FullTextSearch',
+    primary: 'ID_FullTextSearch',
+    fields: ['ID_FullTextSearch', 'ID_Document', 'fulltext'],
+    relations: {
+        'Document': CRUD.RELATION_SINGLE
+    },
+    createStatement: 'create virtual table "FullTextSearch" using fts3(ID_FullTextSearch INTEGER PRIMARY KEY NOT NULL, "ID_Document" INTEGER NOT NULL, fulltext TEXT, tokenize=porter);',
+    adapter: 'dbAdapter',
+    defaultValues: {
+
+    },
+    fixtures: [
+
+    ],
+    migrations: {
+
+    }
+
+}, {
+
+});
+
+
 var DocumentMetaData = CRUD.define({
     className: 'DocumentMetaData',
     table: 'DocumentMetaData',
@@ -200,8 +225,8 @@ var Company = CRUD.define({
     fixtures: [
 
     ],
+}, {
+    count: 0
 })
 
-
-
-CRUD.DEBUG = true;
+CRUD.DEBUG = false;

@@ -61,6 +61,11 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                                 doc.Persist();
                             })
 
+                            var ft = new FullTextSearch();
+                            ft.ID_Document = doc.ID_Document;
+                            ft.fulltext = content.fulltext;
+                            ft.Persist();
+
                             DocumentsList.refresh();
                         })
 
@@ -120,7 +125,7 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                         return page.getTextContent().then(function(textContent) { // fetch textcontent from page
                             return textContent.items.map(function(item) { // join all text on page by ' '
                                 return item.str;
-                            }).join('');
+                            }).join(' ');
                         });
                     });
                 })).then(function(pages) { // join pages array, end chain. 

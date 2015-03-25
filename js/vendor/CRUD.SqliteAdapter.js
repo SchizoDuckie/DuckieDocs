@@ -182,6 +182,25 @@ CRUD.SQLiteAdapter = function(database, dbOptions) {
         });
     };
 
+    this.FindCount = function(what, filters, sorting, justthese, options) {
+        var builder = new CRUD.Database.SQLBuilder(what, filters || {}, sorting || {}, justthese || {}, options || {});
+        var query = builder.getCount();
+        var opt = options;
+        this.lastQuery = query;
+
+        CRUD.log("Executing query via sqliteadapter: ", options, query);
+        return new Promise(function(resolve, fail) {
+            return delayUntilSetupDone(function() {
+                db.execute(query.query, query.parameters).then(function(resultSet) {
+                    resolve(resultSet.next().row.count);
+                }, function(resultSet, sqlError) {
+                    CRUD.log('SQL Error in FINDCount : ', sqlError, resultSet, what, query, [query.split(' VALUES (')[0], (s = JSON.stringify(valueBindings)).substr(1, s.length - 2)].join(' VALUES (') + ')');
+
+                });
+            });
+        });
+    };
+
     this.Persist = function(what, forceInsert) {
         CRUD.stats.writesQueued++;
         var query = [],
@@ -476,7 +495,10 @@ CRUD.Database.SQLBuilder.prototype = {
         var where = (this.wheres.length > 0) ? ' WHERE ' + this.wheres.join(" \n AND \n\t") : '';
         var order = '';
         var group = (this.groups.length > 0) ? ' GROUP BY ' + this.groups.join(", ") : '';
-        var query = "SELECT count(*) FROM \n\t" + CRUD.EntityManager.entities[this.entity].table + "\n " + this.joins.join("\n ") + where + ' ' + group + ' ' + order + ' ';
-        return (query);
+        var query = "SELECT count(" + CRUD.EntityManager.entities[this.entity].primary + ") as count FROM \n\t" + CRUD.EntityManager.entities[this.entity].table + "\n " + this.joins.join("\n ") + where + ' ' + group + ' ' + order + ' ';
+        return ({
+            query: query,
+            parameters: this.parameters
+        });
     }
 };

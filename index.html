@@ -41,6 +41,11 @@
           <a id="actionbar_companies" class="glyphicon glyphicon-book" tooltip="Companies" tooltip-placement="right" ng-click="actionbar.go('companies');"></a>
         </li>
 
+             <li>
+          <a id="actionbar_search" class="glyphicon glyphicon-search" tooltip="Find a Document" tooltip-placement="right" ng-click="actionbar.go('search');"></a>
+        </li>
+
+
         
       </ul>
     </div>
@@ -86,10 +91,12 @@
   <script src="./js/app.standalone.js"></script>
 
   <script src="js/controllers/ActionBarCtrl.js"></script>
+  <script src="js/controllers/CompanyCtrl.js"></script>
   <script src="js/controllers/CompaniesCtrl.js"></script>
   <script src="js/controllers/DocumentCtrl.js"></script>
   <script src="js/controllers/LoginCtrl.js"></script>
   <script src="js/controllers/HomeCtrl.js"></script>
+  <script src="js/controllers/SearchCtrl.js"></script>
   <script src="js/controllers/UploadCtrl.js"></script>
   <script src="js/controllers/sidepanel/SidepanelDocumentCtrl.js"></script>
   <script src="js/controllers/settings/DisplayCtrl.js"></script>
