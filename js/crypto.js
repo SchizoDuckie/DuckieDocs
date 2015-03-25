@@ -48,6 +48,27 @@ DuckieDocs.factory('Security', function() {
             })
         },
 
+        decryptToBuffer: function(inputFile, password) {
+            return new Promise(function(resolve, fail) {
+                console.log('decrypting', inputFile);
+                var fs = require('fs'),
+                    zlib = require('zlib'),
+                    accum = require('accum');
+
+                var decipher = crypto.createDecipher('aes-256-cbc', password),
+                    input = fs.createReadStream(inputFile),
+                    unzip = zlib.createGunzip();
+
+
+                input.pipe(decipher).pipe(unzip).pipe(accum(function(alldata) {
+                    console.log('Decrypted file written to memory!', alldata);
+
+                    resolve(alldata);
+                }));
+
+            })
+        },
+
 
         encrypt: function(string, password) {
             var cipher = crypto.createCipher('aes-256-cbc', password)

@@ -37,7 +37,7 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
 
         this.persist = function(doc, file) {
 
-            if (!doc.name) {
+            if (!doc.name || doc.name == 'waiting...') {
                 doc.name = file.name;
             }
 
@@ -53,20 +53,18 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                         doc.isConverted = 1;
                         doc.image = filepath + '.png';
                         doc.Persist().then(function() {
-                            var content = new DocumentContent();
-                            content.fulltext = result;
-                            content.ID_Document = doc.ID_Document;
-                            content.Persist().then(function() {
-                                doc.ID_DocumentContent = content.ID_DocumentContent;
-                                doc.Persist();
-                            })
 
                             var ft = new FullTextSearch();
                             ft.ID_Document = doc.ID_Document;
-                            ft.fulltext = content.fulltext;
-                            ft.Persist();
+                            ft.fulltext = result;
+                            ft.Persist().then(function() {
+                                doc = null;
+                                ft = null;
+                            })
+                            setTimeout(function() {
+                                DocumentsList.refresh();
 
-                            DocumentsList.refresh();
+                            })
                         })
 
                     });
@@ -82,10 +80,15 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
         $rootScope.$on('handle:drag', function(evt, file) {
             console.log("Drop detected", file);
             var doc = new Document();
+            doc.name = 'waiting...';
             self.uploadQueue.push(doc);
-            self.persist(doc, file);
+            setTimeout(function() {
+                self.persist(doc, file);
+            }, self.uploadQueue.length);
             $scope.$applyAsync();
         })
+
+
 
         /**
          * Extract text from PDFs with PDF.js
@@ -96,11 +99,12 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
             PDFJS.workerSrc = 'js/vendor/pdf.worker.js';
             PDFJS.cMapUrl = 'js/vendor/pdfjs/cmaps/';
             PDFJS.cMapPacked = true;
+            PDFJS.disableWorker = true; // crashes due to out of memory when enabled and uploading loads of files.
 
             function createThumbnail(page, imagePath) {
-                var viewport = page.getViewport(0.5);
                 var canvas = document.createElement('canvas');
                 var ctx = canvas.getContext('2d');
+                var viewport = page.getViewport(0.7);
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
@@ -111,8 +115,11 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                     ctx.globalCompositeOperation = "destination-over";
                     ctx.fillStyle = "#ffffff";
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    require('fs').writeFile(require('path').resolve(process.cwd()) + imagePath, new Buffer(canvas.toDataURL().replace(/^data:image\/\w+;base64,/, ""), 'base64'));
-
+                    require('fs').writeFileSync(require('path').resolve(process.cwd()) + imagePath, new Buffer(canvas.toDataURL().replace(/^data:image\/\w+;base64,/, ""), 'base64'));
+                    delete viewport;
+                    delete page;
+                    delete canvas;
+                    delete ctx;
                 });
             }
 
@@ -123,6 +130,7 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
                         console.log('Process page: ', pageNumber);
                         if (pageNumber == 0) createThumbnail(page, imagePath); // create thumb nail for first page.
                         return page.getTextContent().then(function(textContent) { // fetch textcontent from page
+                            page = null;
                             return textContent.items.map(function(item) { // join all text on page by ' '
                                 return item.str;
                             }).join(' ');

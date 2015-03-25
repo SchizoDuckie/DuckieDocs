@@ -20,28 +20,20 @@ DuckieDocs.controller('SearchCtrl', ["$state", "$scope",
         this.searchResults = [];
 
         this.search = function() {
-            this.searchResults = [];
-
-            CRUD.Find('FullTextSearch', ['fulltext match "' + this.searchModel.query + '"']).then(function(results) {
-
-                console.log('results', results);
-                results.map(function(result) {
-                    CRUD.FindOne('Document', {
-                        ID_Document: result.ID_Document
-                    }).then(function(doc) {
-                        vm.searchResults.push(doc);
-                        $scope.$applyAsync();
-                    })
-                })
+            vm.searchResults = [];
+            CRUD.EntityManager.getAdapter().db.execute("select Documents.* from FullTextSearch left join Documents on FullTextSearch.ID_Document = Documents.ID_Document where fulltext match ?", [this.searchModel.query]).then(function(result) {
+                for (var i = 0; i < result.rs.rows.length; i++) {
+                    vm.searchResults.push(CRUD.fromCache(Document, result.rs.rows.item(i)));
+                }
+                $scope.$applyAsync();
 
             });
-        }
+        };
 
         this.go = function(doc) {
             $state.go('document', {
                 id: doc.ID_Document
             });
-
         }
 
     }
