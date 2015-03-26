@@ -13,5 +13,6 @@ var DuckieDocs = angular.module('DuckieDocs', [
     'pascalprecht.translate',
     'formly',
     'formlyBootstrap',
-    'pdf'
+    'pdf',
+    'ui.select'
 ])

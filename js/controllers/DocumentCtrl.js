@@ -6,9 +6,9 @@ DuckieDocs.controller('DocumentCtrl', ['$scope', '$state', 'Document', 'Security
         this.Document = Document;
 
         $scope.pdf = vm.pdf = null;
-
+        console.log('Decrypting PDF', new Date().toTimeString());
         Security.decryptToBuffer(process.cwd() + Document.filepath + '.encrypted', Security.password).then(function(result) {
-
+            console.log('PDF decyrpted', new Date().toTimeString());
             PDFJS.workerSrc = 'js/vendor/pdf.worker.js';
             PDFJS.cMapUrl = 'js/vendor/pdfjs/cmaps/';
             PDFJS.cMapPacked = true;

@@ -1,13 +1,48 @@
 <h1>Find a Document</h1>
 
 <form ng-submit="vm.onSubmit()" novalidate>
-	<formly-form model="vm.searchModel" fields="vm.searchFields">
+	<formly-form model="vm.searchModel" fields="vm.searchFields" style='display: inline-block; width:500px;'></formly-form>
+
 	  <button type="submit" class="btn btn-success" ng-click="vm.search()"><i class="glyphicon glyphicon-search"></i> Search</button>
-	</formly-form>
+
+
+	  <button type="submit" class="btn btn-info" ng-click="vm.findNoCompany()"><i class="glyphicon glyphicon-search"></i> Find all documents without a company</button>
+	
 </form>
+<hr>
+<nav class="nav">
+<button class="btn" ng-click="vm.selectAll()"><input type="checkbox" checked style="pointer-events:none" ng-click="vm.selectAll()"> Select all</button>
+<button class="btn" ng-click="vm.selectNone()"><input type="checkbox" style="pointer-events:none" ng-click="vm.selectNone()"> Select none</button>
+<button class="btn" ng-click="vm.selectNoCompany()"><input type="checkbox" style="pointer-events:none" ng-click="vm.selectNoCompany()"> Select Without Company</button>
 
 
-<div ng-repeat="document in vm.searchResults track by $index" class="document" ng-click="vm.go(document)">
-	<img src=".{{ document.image}}">
-	<strong>{{document.name}}</strong>
+ <ui-select ng-model="vm.assignCompany"
+             theme="bootstrap"
+             reset-search-input="false"
+             style="width: 300px; display:inline-block;"
+             title="Choose an address">
+    <ui-select-match placeholder="Assign to company">
+    <div><img src="./documents/CompanyImages/{{$select.selected.image}}" style='width:50px; max-height:25px;'>
+     <strong> {{ $select.selected.name}}</strong></div>
+    </ui-select-match>
+    <ui-select-choices repeat="company in vm.companies | andFilter: { name: $select.search } | orderBy: company.name">
+      <div><img src="./documents/CompanyImages/{{company.image}}" style='width:50px; max-height:25px;'>
+     <strong ng-bind-html="company.name | highlight: $select.search"></strong></div>
+    </ui-select-choices>
+    </ui-select>
+
+    <button class="btn btn-info" ng-if="vm.assignCompany" ng-click="vm.assignCompanyToSelected()">Assign selected</button>
+</nav>
+<hr>
+
+<div style='float:left; margin: 5px; height:400px;' ng-repeat="document in vm.searchResults track by $index" ng-class="{ 'alert-info': document.selected }">
+
+	<div class="document"  ng-click="vm.go(document)">
+		<img src=".{{ document.image}}">
+		<strong style='display:block; position: absolute;'>{{document.name}}</strong>
+	</div>
+	<strong ng-if="document.ID_Company" class="alert alert-success documentinfo" style="width:202px;">{{ vm.getCompanyName(document) }}</strong>
+	<strong ng-if="!document.ID_Company" class="alert alert-warning documentinfo">No company attached yet</strong>
+	<label class="alert" style="display: block; margin: 0; margin-left: 20px;  margin-right: 20px;  padding: 5px;  text-align: center;" for="checkbox_{{document.ID_Document}}">
+	<input type="checkbox" id="checkbox_{{document.ID_Document}}" ng-model="document.selected"> Select</label>
 </div>
