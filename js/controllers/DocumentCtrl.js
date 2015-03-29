@@ -5,6 +5,10 @@ DuckieDocs.controller('DocumentCtrl', ['$scope', '$state', 'Document', 'Security
 
         this.Document = Document;
 
+        this.Document.lastAccessed = new Date().getTime();
+        this.Document.openedCount++;
+        this.Document.Persist();
+
         $scope.pdf = vm.pdf = null;
         console.log('Decrypting PDF', new Date().toTimeString());
         Security.decryptToBuffer(process.cwd() + Document.filepath + '.encrypted', Security.password).then(function(result) {
@@ -17,5 +21,7 @@ DuckieDocs.controller('DocumentCtrl', ['$scope', '$state', 'Document', 'Security
             $scope.pdf = vm.pdf = new Uint8Array(result);
             $scope.$applyAsync();
         })
+
+
     }
 ]);

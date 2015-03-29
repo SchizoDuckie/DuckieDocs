@@ -20,7 +20,6 @@ var DuckieDocs = angular.module('DuckieDocs', [
 .run(['$rootScope', 'Security',
     function($rootScope, Security) {
         $rootScope.isLoggedIn = function() {
-            console.log("is logged in? ", Security.username && Security.password)
             return Security.username && Security.password;
         }
 

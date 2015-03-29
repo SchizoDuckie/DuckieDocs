@@ -1,4 +1,59 @@
-<h1>Companies</h1>
+<div layout="row">
+<md-card flex="50">
+    <md-subheader class="primary">All Companies</md-subheader>
+    <md-card-content  style='overflow-y: auto'>
+   		 <div>
+          		<h1>You have no companies yet</h1>
+          		<h4>Go create one!</h4>
+          	</div>
+        <md-list ng-if="vm.companies.length > 0">
+          <md-item ng-repeat="company in vm.companies">
+            <md-item-content ng-click="vm.go(company) ">
+
+              <div class="md-tile-left">
+                  <img ng-src=".{{company.image}}" style='height:80px; width:80px' class="circle">
+              </div>
+              <div class="md-tile-content">
+                <h3>{{company.name}}</h4>
+                <p>Documents: {{ company.docCount }} </p>
+              </div>
+            </md-item-content>
+          </md-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+<md-card flex="45">
+   
+    <md-subheader class="primary">Create a new company</md-subheader>
+    <md-card-content style='overflow-y: auto'>
+      <md-list>
+          <md-item>
+          	<md-item-content>
+   
+              <div class="md-tile-left md-tile-top">
+                  <img ng-if="company.image" ng-src=".{{company.image}}" style='height:80px; width:80px' class="circle" title="choose a logo" alt="choose a logo">
+
+                  <a ng-click="chooseLogo()" style="text-align:center"><ng-md-icon ng-if="!company.image" style="fill: navy; margin: 0 auto" icon="image" size="40"></ng-md-icon><br>Choose a logo</a>
+              </div>
+              <div class="md-tile-content">
+                <formly-form model="vm.Company" fields="vm.companyFields">
+
+					<button ng-if="vm.Company && vm.Company.ID_Company" class="btn btn-success" ng-click="vm.findLogo(); vm.showLogoSearch=true"><i class="glyphicon glyphicon-search"></i> Find Logo</button>
+
+
+				  	<button type="submit" class="btn btn-success" ng-click="vm.saveCompany(); editCompany=false;"><i class="glyphicon glyphicon-key"></i> Save </button>
+
+				</formly-form>
+
+              </div>
+              </md-item-content>
+              </md-item>
+              </md-list>
+           
+    </md-card-content>
+</md-card>
+
 
 
 <div class="company" ng-repeat="company in vm.companies" style="float:left; margin: 20px; padding: 20px;" ng-click="vm.go(company)">

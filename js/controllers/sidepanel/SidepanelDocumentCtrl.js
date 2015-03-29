@@ -71,32 +71,31 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
             });
         }
 
-        this.companyFields = [{
-            key: 'name',
-            type: 'md-input',
-            templateOptions: {
-                type: 'text',
-                label: 'Company Name',
-                placeholder: 'ACME B.V.'
-            }
-        }, {
-            key: 'address',
-            type: 'md-input',
-            templateOptions: {
-                type: 'text',
-                label: 'Address',
-                placeholder: 'Streetname XX'
-            }
-        }, {
-            key: 'country',
-            type: 'md-input',
-            templateOptions: {
-                type: 'text',
-                label: 'Country',
-                placeholder: 'NomansLand'
-            }
-        }];
-
+    this.companyFields = [{
+        key: 'name',
+        type: 'md-input',
+        templateOptions: {
+            type: 'text',
+            label: 'Company Name',
+            placeholder: 'ACME B.V.'
+        }
+    }, {
+        key: 'address',
+        type: 'md-input',
+        templateOptions: {
+            type: 'text',
+            label: 'Address',
+            placeholder: 'Streetname XX'
+        }
+    }, {
+        key: 'country',
+        type: 'md-input',
+        templateOptions: {
+            type: 'text',
+            label: 'Country',
+            placeholder: 'NomansLand'
+        }
+    }];
 
     }
 ]);

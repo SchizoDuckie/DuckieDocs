@@ -1,16 +1,95 @@
-<h1>Uploaded documents:</h1>
+<div layout="row">
+<md-card flex>
+   
+    <md-subheader class="primary">All documents</md-subheader>
+    <md-card-content  style='overflow-y: auto'>
+        <md-list>
+          <md-item ng-repeat="document in home.documentsList.all">
+            <md-item-content ng-click="home.go(document) ">
 
-<md-grid-list
-        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
-        md-row-height-gt-md="1:1" md-row-height="1:4"
-        md-gutter="12px" md-gutter-gt-sm="8px" >
-    <md-grid-tile class="gray"  ng-repeat="document in home.documentsList.all" ng-click="home.go(document)">
-    	<md-card>
-    	<img src=".{{ document.image}}" style="width:150px"></md-card>
-      <md-grid-tile-footer>
-        <md-button class="md-raised">{{document.name}}</md-button>
-        <strong ng-if="!document.ID_Company">No company attached yet</strong>
-      </md-grid-tile-footer>
-    </md-grid-tile>
+              <div class="md-tile-left">
+                  <img ng-src=".{{document.image}}" style='height:80px; width:80px' class="circle">
+              </div>
+              <div class="md-tile-content">
+                <h3>{{document.name}}</h4>
+                <h4 ng-if="!document.ID_Company">No company attached yet <small><a href="bla">Attach</a></small></h4>
+                <p>Uploaded: {{document.created | date: shortDate }} </p>
+              </div>
+            </md-item-content>
+          </md-item>
+        </md-list>
+    </md-card-content>
+</md-card>
 
-</md-grid-list>
+
+<md-card flex>
+    <md-subheader class="primary">All Companies</md-subheader>
+    <md-card-content  style='overflow-y: auto'>
+        <md-list>
+          <md-item ng-repeat="company in home.companies">
+            <md-item-content>
+
+              <div class="md-tile-left">
+                  <img ng-src=".{{company.image}}" style='height:50px' class="circle">
+              </div>
+              <div class="md-tile-content">
+                <h3>{{company.name}}</h3>
+                <h4>{{company.docCount }} document(s)</h4>
+              </div>
+            </md-item-content>
+          </md-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+</div>
+
+<div layout="row">
+
+<md-card flex>
+    <md-subheader class="primary">Documents without company</md-subheader>
+    <md-card-content  style='overflow-y: auto'>
+        <md-list>
+          <md-item ng-repeat="document in home.documentsList.all | filter: !document.ID_Company == ''">
+            <md-item-content>
+
+              <div class="md-tile-left">
+                  <img ng-src=".{{document.image}}" style='height:50px' class="circle">
+              </div>
+              <div class="md-tile-content">
+                <h4>{{document.name}}</h4>
+                <h3 ng-if="!document.ID_Company">No company attached yet</h3>
+                <p>Uploaded:
+                  {{document.uploaded | date:shortDate }}
+                </p>
+              </div>
+            </md-item-content>
+          </md-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+
+<md-card flex>
+    <md-subheader class="primary">Recently opened documents</md-subheader>
+    <md-card-content  style='overflow-y: auto'>
+        <md-list>
+          <md-item ng-repeat="document in home.documentsList.all">
+            <md-item-content ng-click="home.go(document) ">
+
+              <div class="md-tile-left">
+                  <img ng-src=".{{document.image}}" style='height:80px; width:80px' class="circle">
+              </div>
+              <div class="md-tile-content">
+                <h3>{{document.name}}</h4>
+                <h4 ng-if="!document.ID_Company">No company attached yet <small><a href="bla">Attach</a></small></h4>
+                <p>Last accessed: {{document.lastAccessed | date: shortDate }} </p>
+              </div>
+            </md-item-content>
+          </md-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+
+
+</div>

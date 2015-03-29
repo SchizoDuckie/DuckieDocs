@@ -1,21 +1,31 @@
+<div layout="row">
+	<md-card>
+		 <md-subheader class="primary">{{vm.Document.name }}</md-subheader>
+	    
+				
+		<md-card-content>
 
-<md-card>
-	<md-toolbar>
-			<h3>{{vm.Document.name }}</h3>
-	</md-toolbar>
-	<md-card-content>
+			<strong>Filename: </strong>{{ vm.Document.filepath }}<br>
+			<strong>Description: </strong>{{ vm.Document.description }}<br>
 
-		<strong>Filename: </strong>{{ vm.Document.filepath }}<br>
-		<strong>Description: </strong>{{ vm.Document.description }}<br>
+			<strong>Last accessed</strong> {{vm.Document.lastAccessed }}<br>
 
-		<img ng-if="vm.Company.image" src="./documents/CompanyImages/{{vm.Company.image}}">
+			<strong>Opened count</strong> {{ vm.Document.openedCount }}<br>
 
-		<h3>Tags:</h3>
-		[add]
+			<company id="{{vm.Document.ID_Company}}"></company>
 
-		
-	</md-card-content>
-</md-card>
+			<img ng-if="vm.Company.image" src="./documents/CompanyImages/{{vm.Company.image}}">
+
+			<h3>Tags:</h3>
+			[add]
+
+			
+		</md-card-content>
+	</md-card>
+
 	<ng-pdf ng-if="vm.pdf" canvasid="pdf" scale="1.5"></ng-pdf>
+			
 	
+
+</div>
 	

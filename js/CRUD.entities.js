@@ -207,7 +207,7 @@ var Company = CRUD.define({
     className: 'Company',
     table: 'Companies',
     primary: 'ID_Company',
-    fields: ['ID_Company', 'name', 'address', 'zipcode', 'country', 'image', 'url'],
+    fields: ['ID_Company', 'name', 'address', 'city', 'zipcode', 'country', 'image', 'url'],
 
     autoSerialize: [],
     relations: {

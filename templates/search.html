@@ -1,11 +1,10 @@
-<div layout="column" style="flex-flow: wrap">
-	
-	<div layout="row" layout-align="space-around start" layout-margin layout-fill >
+<div layout="row" layout-align="space-around start" style='width:100%'>
 
 		<md-card flex="66">
-			<md-toolbar class="md-default-theme">
-				<h4 class="md-title" style='padding-left:25px'>Search your library</h4>
-			</md-toolbar>
+			
+				
+    <md-subheader class="primary">Search your library</md-subheader>
+			
 
 			<md-card-content>
 
@@ -22,9 +21,8 @@
 		</md-card>
 
 		<md-card flex="33" style="text-align:left;">
-			<md-toolbar>
-				<h4 style='padding-left:25px;'>Tools</h4>
-			</md-toolbar>
+			
+    		<md-subheader class="primary">Tools</md-subheader>
 			<md-card-content>
 			<md-button class="md-raised" ng-click="vm.selectAll()" style='text-align:left'><input type="checkbox" checked style="pointer-events:none" ng-click="vm.selectAll()"> Select all</md-button>
 			<md-button class="md-raised" ng-click="vm.selectNone()" style='text-align:left'><input type="checkbox" style="pointer-events:none" ng-click="vm.selectNone()"> Select none</md-button>
@@ -37,7 +35,7 @@
 	          md-items="company in vm.companies | filter: { name : vm.searchText}"
 	          md-item-text="company.name"
 	          placeholder="Start typing to select a company">
-	        <span md-highlight-text="vm.searchText"><img src="./documents/CompanyImages/{{company.image}}" style='width:50px; max-height:25px;'> {{company.name}}</span>
+	        <span md-highlight-text="vm.searchText"><img src="./documents/CompanyImages/{{company.image}}" style='width:50px; max-height:25px;'>img {{company.name}}</span>
 	      </md-autocomplete>
 	    <md-button class="md-raised md-primary" ng-if="vm.assignCompany" ng-click="vm.assignCompanyToSelected()">Assign selected</md-button>
 	      </md-card-content>
@@ -49,25 +47,23 @@
 	<div layout="row" layout-margin layout-fill style="flex-flow: wrap" >
 	<md-card flex layout-padding >
 		
-		<md-toolbar>
-			<h4 style='padding-left:25px;'>Search results: {{ vm.searchResults.length }} </h4>
-		</md-toolbar>
+		<md-subheader class="primary">Search results: {{ vm.searchResults.length }} </md-subheader>
 		<md-card-content>
 
 		<md-grid-list
 		        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
-		        md-row-height-gt-md="1:1" md-row-height="1:4"
+		        md-row-height-gt-md="1:2" md-row-height="1:4"
 		        md-gutter="12px" md-gutter-gt-sm="8px" >
-		    <md-grid-tile class="gray"  ng-repeat="document in vm.searchResults " ng-click="home.go(document)">
-		    	<md-card flex>
-		    		<md-image src=".{{ document.image}}">
+		    <md-grid-tile class="gray"  ng-repeat="document in vm.searchResults " >
+		    	<md-card flex ng-click="vm.go(document)">
+		    		<img src=".{{ document.image}}">
 		    	</md-card>
 		      <md-grid-tile-footer>
 		        <md-button class="md-raised">{{document.name}}</md-button>
 		        <strong ng-if="!document.ID_Company">No company attached yet</strong>
 
 		        <label class="alert" style="display: block; margin: 0; margin-left: 20px;  margin-right: 20px;  padding: 5px;  text-align: center;" for="checkbox_{{document.ID_Document}}">
-			<input type="checkbox" id="checkbox_{{document.ID_Document}}" ng-model="document.selected"> Select</label>
+					<input type="checkbox" id="checkbox_{{document.ID_Document}}" ng-model="document.selected"> Select</label>
 
 		      </md-grid-tile-footer>
 		    </md-grid-tile>
@@ -75,6 +71,3 @@
 		</md-grid-list>
 		</md-card>
 	</div>
-
-
-</div>

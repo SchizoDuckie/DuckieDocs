@@ -1,22 +1,41 @@
  @charset"UTF-8";
- @font-face {
-    font-family:'bebasbold';
-    src: url('../fonts/bebasneue_bold-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 300;
+  src: local('RobotoDraft Light'), local('RobotoDraft-Light'), url(../fonts/light.ttf) format('truetype');
 }
 @font-face {
-    font-family:'bebaslight';
-    src: url('../fonts/bebasneue_light-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 400;
+  src: local('RobotoDraft'), local('RobotoDraft-Regular'), url(../fonts/normal.ttf) format('truetype');
 }
 @font-face {
-    font-family:'bebasregular';
-    src: url('../fonts/bebasneue_regular-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 500;
+  src: local('RobotoDraft Medium'), local('RobotoDraft-Medium'), url(../fonts/normalmedium.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 700;
+  src: local('RobotoDraft Bold'), local('RobotoDraft-Bold'), url(../fonts/bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: italic;
+  font-weight: 400;
+  src: local('RobotoDraft Italic'), local('RobotoDraft-Italic'), url(../fonts/italic.ttf) format('truetype');
+}
+
+
+h1 {
+    font-weight: lighter;
+}
+
 body > .container {
     width: calc(100% - 48px);
     padding: 20px;
@@ -42,20 +61,12 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-repeat:no-repeat;
-    font-family: helvetica, sans-serif;
     color: #444;
     height: 100%;
 }
 
-h1, h2, h3 {
-    font-family:'bebasregular', helvetica, sans-serif;
-}
-strong {
-    font-family:'bebasregular';
-    letter-spacing: 2px;
-}
 
-
+    
 
 query-monitor {
     position: fixed;
@@ -135,4 +146,15 @@ query-monitor.show {
   margin-right: 20px;
   padding: 5px;
   text-align: center;
+}
+
+md-grid-list md-grid-tile md-grid-tile-footer {
+    height:75px;
+}
+
+.circle {
+  border-radius: 40px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px;
 }

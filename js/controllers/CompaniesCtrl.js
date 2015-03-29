@@ -6,11 +6,13 @@ DuckieDocs.controller('CompaniesCtrl', ['Companies', '$scope', '$state',
             CRUD.FindCount('Document', {
                 ID_Company: company.ID_Company
             }).then(function(count) {
-                company.count = count;
+                company.docCount = count;
                 $scope.$applyAsync();
             })
         });
 
+
+        this.Company = new Company();
 
         this.go = function(company) {
             $state.go('company', {
@@ -18,5 +20,32 @@ DuckieDocs.controller('CompaniesCtrl', ['Companies', '$scope', '$state',
             });
 
         }
+
+        this.companyFields = [{
+            key: 'name',
+            type: 'md-input',
+            templateOptions: {
+                type: 'text',
+                label: 'Company Name',
+                placeholder: 'ACME B.V.'
+            }
+        }, {
+            key: 'address',
+            type: 'md-input',
+            templateOptions: {
+                type: 'text',
+                label: 'Address',
+                placeholder: 'Streetname XX'
+            }
+        }, {
+            key: 'country',
+            type: 'md-input',
+            templateOptions: {
+                type: 'text',
+                label: 'Country',
+                placeholder: 'NomansLand'
+            }
+        }];
+
     }
 ]);
