@@ -14,7 +14,7 @@ DuckieDocs.controller('LoginCtrl', ['Security', '$state',
 
         this.userFields = [{
             key: 'username',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'text',
                 label: 'User Name',
@@ -22,7 +22,7 @@ DuckieDocs.controller('LoginCtrl', ['Security', '$state',
             }
         }, {
             key: 'password',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'password',
                 label: 'Password',

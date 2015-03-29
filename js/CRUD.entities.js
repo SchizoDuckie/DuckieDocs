@@ -11,17 +11,17 @@ var Document = CRUD.define({
     className: 'Document',
     table: 'Documents',
     primary: 'ID_Document',
-    fields: ['ID_Document', 'ID_DocumentType', 'ID_Company', 'ID_DocumentContent', 'name', 'description', 'image', 'filepath', 'isConverted', 'lastAccessed', 'openedCount'],
+    fields: ['ID_Document', 'ID_DocumentType', 'ID_Company', 'ID_DocumentContent', 'name', 'documentdate', 'description', 'image', 'filepath', 'isConverted', 'created', 'lastAccessed', 'openedCount'],
     relations: {
-        'Company': CRUD.RELATION_FOREIGN,
+        'Company': CRUD.RELATION_SINGLE,
         'Tag': CRUD.RELATION_MANY,
-        'DocumentContent': CRUD.RELATION_FOREIGN
+        'DocumentContent': CRUD.RELATION_SINGLE
     },
     indexes: [
         'name'
     ],
 
-    createStatement: 'CREATE TABLE "Documents" ("ID_Document" INTEGER PRIMARY KEY NOT NULL, "ID_DocumentType" INTEGER NULL, "ID_Company" INTEGER DEFAULT NULL,  "ID_DocumentContent" INTEGER DEFAULT NULL,  "name" varchar(255), "description" TEXT NULL, "image" VARCHAR(1024) NULL, "filepath" VARCHAR(1024) null, "isConverted" INTEGER(1) default 0, "lastAccessed" TIMESTAMP NULL, "openedCount" INTEGER DEFAULT 0 )',
+    createStatement: 'CREATE TABLE "Documents" ("ID_Document" INTEGER PRIMARY KEY NOT NULL, "ID_DocumentType" INTEGER NULL, "ID_Company" INTEGER DEFAULT NULL,  "ID_DocumentContent" INTEGER DEFAULT NULL,  "name" varchar(255), "documentdate" DATE  NULL, "description" TEXT NULL, "image" VARCHAR(1024) NULL, "filepath" VARCHAR(1024) null, "isConverted" INTEGER(1) default 0, "created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "lastAccessed" TIMESTAMP NULL, "openedCount" INTEGER DEFAULT 0 )',
     adapter: 'dbAdapter',
     defaultValues: {
 
@@ -211,7 +211,7 @@ var Company = CRUD.define({
 
     autoSerialize: [],
     relations: {
-        'Document': CRUD.RELATION_MANY,
+        'Document': CRUD.RELATION_FOREIGN,
         'Tag': CRUD.RELATION_MANY
     },
     createStatement: 'CREATE TABLE "Companies" ("ID_Company" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) ,"address" varchar(255),"zipcode" varchar(10), "city" varchar(100) ,"country" varchar(50),"image" varchar(255) ,"url" varchar(1024) )',

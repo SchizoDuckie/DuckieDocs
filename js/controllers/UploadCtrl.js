@@ -11,7 +11,7 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
 
         this.uploadFields = [{
             key: 'name',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'text',
                 label: 'Document name',
@@ -19,7 +19,7 @@ DuckieDocs.controller('UploadCtrl', ["Security", "DocumentsList", "$rootScope", 
             }
         }, {
             key: 'document',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'file',
                 label: 'Upload a document',

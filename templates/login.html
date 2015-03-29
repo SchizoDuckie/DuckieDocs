@@ -1,5 +1,28 @@
-<h1>Login to DuckieDocs</h1>
+<div layout="row" layout-align="space-around start">
+	<md-card flex>
+		<md-toolbar class="md-default-theme">
+			<h4 class="md-title" style='padding-left:25px'>Welcome to DuckieDocs</h4>
+		</md-toolbar>
 
-<formly-form model="login.userModel" fields="login.userFields">
-  <button type="submit" class="btn btn-success" ng-click="login.login()"><i class="glyphicon glyphicon-key"></i> Submit</button>
-</formly-form>
+		<md-card-content>
+			<p>DuckieDocs helps you digitize, organize and manage the paper documents, recepts, invoices you receive.</p>
+			<img src="img/icon-256.png">
+		</md-card-content>
+	</md-card>
+
+	<md-card flex>
+		<md-toolbar class="md-default-theme">
+			<h4 class="md-title" style='padding-left:25px'>Login to DuckieDocs</h4>
+		</md-toolbar>
+
+		<md-card-content>
+			<form ng-submit="login.login()">
+				<formly-form model="login.userModel" fields="login.userFields">
+					<md-button type="submit" class="md-raised md-primary" ng-click="login.login()">Login</md-button>
+				</formly-form>
+			</form>
+		</md-card-content>
+	</md-card>
+
+
+</div>

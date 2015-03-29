@@ -1,48 +1,79 @@
-<h1>Find a Document</h1>
-
-<form ng-submit="vm.onSubmit()" novalidate>
-	<formly-form model="vm.searchModel" fields="vm.searchFields" style='display: inline-block; width:500px;'></formly-form>
-
-	  <button type="submit" class="btn btn-success" ng-click="vm.search()"><i class="glyphicon glyphicon-search"></i> Search</button>
-
-
-	  <button type="submit" class="btn btn-info" ng-click="vm.findNoCompany()"><i class="glyphicon glyphicon-search"></i> Find all documents without a company</button>
+<div layout="column">
 	
-</form>
-<hr>
-<nav class="nav">
-<button class="btn" ng-click="vm.selectAll()"><input type="checkbox" checked style="pointer-events:none" ng-click="vm.selectAll()"> Select all</button>
-<button class="btn" ng-click="vm.selectNone()"><input type="checkbox" style="pointer-events:none" ng-click="vm.selectNone()"> Select none</button>
-<button class="btn" ng-click="vm.selectNoCompany()"><input type="checkbox" style="pointer-events:none" ng-click="vm.selectNoCompany()"> Select Without Company</button>
+	<div layout="row" layout-align="space-around start" layout-margin layout-fill >
+
+		<md-card flex="66">
+			<md-toolbar class="md-default-theme">
+				<h4 class="md-title" style='padding-left:25px'>Search your library</h4>
+			</md-toolbar>
+
+			<md-card-content>
+
+				<form ng-submit="vm.onSubmit()" novalidate>
+					<formly-form model="vm.searchModel" fields="vm.searchFields" style='display: inline-block; width:500px;'></formly-form>
+
+					  <md-button type="submit" class="md-raised md-primary" ng-click="vm.search()">Search</md-button>
 
 
- <ui-select ng-model="vm.assignCompany"
-             theme="bootstrap"
-             reset-search-input="false"
-             style="width: 300px; display:inline-block;"
-             title="Choose an address">
-    <ui-select-match placeholder="Assign to company">
-    <div><img src="./documents/CompanyImages/{{$select.selected.image}}" style='width:50px; max-height:25px;'>
-     <strong> {{ $select.selected.name}}</strong></div>
-    </ui-select-match>
-    <ui-select-choices repeat="company in vm.companies | andFilter: { name: $select.search } | orderBy: company.name">
-      <div><img src="./documents/CompanyImages/{{company.image}}" style='width:50px; max-height:25px;'>
-     <strong ng-bind-html="company.name | highlight: $select.search"></strong></div>
-    </ui-select-choices>
-    </ui-select>
+					  <md-button type="submit" class="md-raised" ng-click="vm.findNoCompany()"> Find all documents without a company</md-button>
+					
+				</form>
+			</md-card-content>
+		</md-card>
 
-    <button class="btn btn-info" ng-if="vm.assignCompany" ng-click="vm.assignCompanyToSelected()">Assign selected</button>
-</nav>
-<hr>
+		<md-card flex="33" style="text-align:left;">
+			<md-toolbar>
+				<h4 style='padding-left:25px;'>Tools</h4>
+			</md-toolbar>
+			<md-card-content>
+			<md-button class="md-raised" ng-click="vm.selectAll()" style='text-align:left'><input type="checkbox" checked style="pointer-events:none" ng-click="vm.selectAll()"> Select all</md-button>
+			<md-button class="md-raised" ng-click="vm.selectNone()" style='text-align:left'><input type="checkbox" style="pointer-events:none" ng-click="vm.selectNone()"> Select none</md-button>
+			<md-button class="md-raised" ng-click="vm.selectNoCompany()" style='text-align:left'>Select Without Company</md-button>
 
-<div style='float:left; margin: 5px; height:400px;' ng-repeat="document in vm.searchResults track by $index" ng-class="{ 'alert-info': document.selected }">
+			<h4 style='padding-left:25px;'>Assign selected</h4>
+	<md-autocomplete
+	          md-selected-item="vm.assignCompany"
+	          md-search-text="vm.searchText"
+	          md-items="company in vm.companies | filter: { name : vm.searchText}"
+	          md-item-text="company.name"
+	          placeholder="Start typing to select a company">
+	        <span md-highlight-text="vm.searchText"><img src="./documents/CompanyImages/{{company.image}}" style='width:50px; max-height:25px;'> {{company.name}}</span>
+	      </md-autocomplete>
+	    <md-button class="md-raised md-primary" ng-if="vm.assignCompany" ng-click="vm.assignCompanyToSelected()">Assign selected</md-button>
+	      </md-card-content>
 
-	<div class="document"  ng-click="vm.go(document)">
-		<img src=".{{ document.image}}">
-		<strong style='display:block; position: absolute;'>{{document.name}}</strong>
+
+		</md-card>
 	</div>
-	<strong ng-if="document.ID_Company" class="alert alert-success documentinfo" style="width:202px;">{{ vm.getCompanyName(document) }}</strong>
-	<strong ng-if="!document.ID_Company" class="alert alert-warning documentinfo">No company attached yet</strong>
-	<label class="alert" style="display: block; margin: 0; margin-left: 20px;  margin-right: 20px;  padding: 5px;  text-align: center;" for="checkbox_{{document.ID_Document}}">
-	<input type="checkbox" id="checkbox_{{document.ID_Document}}" ng-model="document.selected"> Select</label>
+
+	<div layout="row" layout-align="space-around start" layout-margin layout-fill  >
+	<md-card flex layout-padding style="flex-flow: column wrap; ">
+		
+		<md-toolbar>
+			<h4 style='padding-left:25px;'>Search results: {{ vm.searchResults.length }} </h4>
+		</md-toolbar>
+		<md-card-content>
+
+		<md-grid-list
+		        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
+		        md-row-height-gt-md="1:1" md-row-height="1:4"
+		        md-gutter="12px" md-gutter-gt-sm="8px" >
+		    <md-grid-tile class="gray"  ng-repeat="document in vm.searchResults " ng-click="home.go(document)">
+		    	<md-card>
+		    	<img src=".{{ document.image}}" style="width:150px"></md-card>
+		      <md-grid-tile-footer>
+		        <md-button class="md-raised">{{document.name}}</md-button>
+		        <strong ng-if="!document.ID_Company">No company attached yet</strong>
+
+		        <label class="alert" style="display: block; margin: 0; margin-left: 20px;  margin-right: 20px;  padding: 5px;  text-align: center;" for="checkbox_{{document.ID_Document}}">
+			<input type="checkbox" id="checkbox_{{document.ID_Document}}" ng-model="document.selected"> Select</label>
+
+		      </md-grid-tile-footer>
+		    </md-grid-tile>
+
+		</md-grid-list>
+		</md-card>
+	</div>
+
+
 </div>

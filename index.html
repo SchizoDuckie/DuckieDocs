@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>DuckieDocs</title>
   <!-- deploy:replace='<link rel="stylesheet" href="dist/style.css">' -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/angular-material.min.css">
+  <link rel="stylesheet" href="css/anim.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/dialogs.css">
   <link rel="stylesheet" href="css/flags.css">
@@ -15,46 +16,72 @@
   <!-- /deploy:replace -->
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
 </head>
-<body>
- <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="container-fluid" ui-view="main">
+  <body layout="column">
+    <md-toolbar layout="row">
+      <div  style="position:fixed; left:5px; top:5px;">
+      <img src="img/icon-48.png">
+      <md-tooltip md-direction="right">DuckieDocs</md-tooltip>
+      </div>
+      <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <h1 class="md-toolbar-tools" layout-align-gt-sm="center">DuckieDocs v0.1</h1>
+
+      <h1 class="md-toolbar-tools md-toolbar-item" style="text-align: right; display: inline-block; padding:15px; font-size:13px">Welcome {{getUserName()}}</h1>
+
+    </md-toolbar>
+    <div layout="row" flex>
+        <!-- left sidenav, auto-hidden when layout too small -->
+        <md-sidenav ng-hide="!isLoggedIn()" layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" >
+         <md-button class="md-raised md-accent" aria-label="home" ui-sref="home" style='text-align:left; vertical-align:middle'>
+            <ng-md-icon icon="home" size="30" style='margin-right:20px'> </ng-md-icon>
+             <span style='line-height:35px; vertical-align:top'>Home</span>
+        </md-button>
+        
+        <md-button class="md-raised" ui-sref="upload" style='text-align:left; vertical-align:middle'>
+         <ng-md-icon icon="file_upload" size="30" style='margin-right:20px'></ng-md-icon> 
+          <span style='line-height:35px; vertical-align:top'>Upload</span>
+        </md-button>
+
+        <md-button class="md-raised" ui-sref="companies" style='text-align:left; vertical-align:middle'>
+         <ng-md-icon icon="store" size="30" style='margin-right:20px'></ng-md-icon>
+          <span style='line-height:35px; vertical-align:top'>My Companies</span>
+        </md-button>
+
+        <md-button class="md-raised" ui-sref="companies" style='text-align:left; vertical-align:middle'>
+         <ng-md-icon icon="label" size="30" style='margin-right:20px'></ng-md-icon>
+          <span style='line-height:35px; vertical-align:top'>Labels</span>
+        </md-button>
+
+        <md-button class="md-raised" ui-sref="search" style='text-align:left; vertical-align:middle'>
+         <ng-md-icon icon="search" size="30" style='margin-right:20px'></ng-md-icon> 
+          <span style='line-height:35px; vertical-align:top'>Search</span>
+        </md-button>
+
+        <md-button class="md-raised" ui-sref="settings" style='text-align:left; vertical-align:middle'>
+         <ng-md-icon icon="settings" size="30" style='margin-right:20px'></ng-md-icon> 
+          <span style='line-height:35px; vertical-align:top'>Settings</span>
+        </md-button>
+
+      
+
+        </md-sidenav>
+        <div layout="column" flex id="content">
           
+            <div layout="row" flex>
+            
+            <md-content layout="column" flex class="md-padding" ui-view="main">
+              
+            </md-content>
+
+             <md-content layout="column" flex="20" class="md-padding md-whiteframe-z2" ui-view="sidePanel">
+              
+            </md-content>
+
+            </div> 
 
         </div>
-      </div>
     </div>
-  </div>
-
-  <div ng-controller="ActionBarCtrl as actionbar">
-    <div id="actionbar">
-      <a onclick='history.go(-1)' class="glyphicon glyphicon-arrow-left" tooltip="Go back" tooltip-placement="right"></a>
-      <div class="logo" ui-sref="home" tooltip="Home!" tooltip-placement="right"></div>
-      <ul class="list-unstyled">
-        <li>
-          <a id="actionbar_home" class="glyphicon glyphicon-home" tooltip="Home" tooltip-placement="right" ng-click="actionbar.hidePanels();actionbar.go('home');"></a>
-        </li>
-        <li>
-          <a id="actionbar_upload" class="glyphicon glyphicon-upload" tooltip="Upload" tooltip-placement="right" ng-click="actionbar.go('upload');"></a>
-        </li>
-
-         <li>
-          <a id="actionbar_companies" class="glyphicon glyphicon-book" tooltip="Companies" tooltip-placement="right" ng-click="actionbar.go('companies');"></a>
-        </li>
-
-             <li>
-          <a id="actionbar_search" class="glyphicon glyphicon-search" tooltip="Find a Document" tooltip-placement="right" ng-click="actionbar.go('search');"></a>
-        </li>
-
-
-        
-      </ul>
-    </div>
-  <div>
-  <sidepanel>
-    <div ui-view="sidePanel"></div>
-  </sidepanel>
 
   <query-monitor ng-class="{show: queryStats.writesQueued - queryStats.writesExecuted > 1}" />
   <img class='printlogo' src='img/icon64.png'>
@@ -76,15 +103,19 @@
   <script src='./js/vendor/ui-bootstrap-tpls-0.10.0.min.js'></script>
   <script src='./js/vendor/tmhDynamicLocale.js'></script>  
   <script src="./js/vendor/dialogs.js"></script>
+  <script src="./js/vendor/angular-aria.min.js"></script>
   <script src="./js/vendor/angular-translate.min.js"></script>
   <script src="./js/vendor/angular-translate-loader-static-files.min.js"></script>
   <script src="./js/vendor/angular-translate-handler-log.min.js"></script>
 
+  <script src="./js/vendor/angular-material.min.js"></script>
+  <script src="./js/vendor/angular-material-icons.min.js"></script>
+  
   <script src="./js/vendor/apiCheck.min.js"></script>
   <script src="./js/vendor/formly.min.js"></script>
-    <script src="./js/vendor/select.js"></script>
+  <script src="./js/vendor/select.js"></script>
 
-  <script src="./js/vendor/angular-formly-templates-bootstrap.min.js"></script>
+  <script src="./js/vendor/angular-formly-templates-material.min.js"></script>
   <!-- /deploy:replace -->
   <!-- deploy:replace='<script src="dist/app.js"></script>' -->
 

@@ -96,7 +96,7 @@ DuckieDocs
 
             this.searchFields = [{
                 key: 'query',
-                type: 'input',
+                type: 'md-input',
                 templateOptions: {
                     type: 'search',
                     label: 'Find a document',

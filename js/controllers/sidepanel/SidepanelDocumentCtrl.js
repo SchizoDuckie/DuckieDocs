@@ -73,7 +73,7 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
 
         this.companyFields = [{
             key: 'name',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'text',
                 label: 'Company Name',
@@ -81,7 +81,7 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
             }
         }, {
             key: 'address',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'text',
                 label: 'Address',
@@ -89,7 +89,7 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
             }
         }, {
             key: 'country',
-            type: 'input',
+            type: 'md-input',
             templateOptions: {
                 type: 'text',
                 label: 'Country',

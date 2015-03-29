@@ -8,11 +8,30 @@ var DuckieDocs = angular.module('DuckieDocs', [
     'ngLocale',
     'ngAnimate',
     'tmh.dynamicLocale',
-    'ui.bootstrap',
-    'dialogs',
     'pascalprecht.translate',
     'formly',
-    'formlyBootstrap',
+    'formlyMaterial',
     'pdf',
-    'ui.select'
+    'ui.select',
+    'ngMaterial',
+    'ngMdIcons'
 ])
+
+.run(['$rootScope', 'Security',
+    function($rootScope, Security) {
+        $rootScope.isLoggedIn = function() {
+            console.log("is logged in? ", Security.username && Security.password)
+            return Security.username && Security.password;
+        }
+
+        $rootScope.getUserName = function() {
+            return Security.username;
+        }
+    }
+])
+
+.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('teal')
+        .accentPalette('blue-grey');
+});
