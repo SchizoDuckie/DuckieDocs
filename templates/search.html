@@ -1,4 +1,4 @@
-<div layout="column">
+<div layout="column" style="flex-flow: wrap">
 	
 	<div layout="row" layout-align="space-around start" layout-margin layout-fill >
 
@@ -46,8 +46,8 @@
 		</md-card>
 	</div>
 
-	<div layout="row" layout-align="space-around start" layout-margin layout-fill  >
-	<md-card flex layout-padding style="flex-flow: column wrap; ">
+	<div layout="row" layout-margin layout-fill style="flex-flow: wrap" >
+	<md-card flex layout-padding >
 		
 		<md-toolbar>
 			<h4 style='padding-left:25px;'>Search results: {{ vm.searchResults.length }} </h4>
@@ -59,8 +59,9 @@
 		        md-row-height-gt-md="1:1" md-row-height="1:4"
 		        md-gutter="12px" md-gutter-gt-sm="8px" >
 		    <md-grid-tile class="gray"  ng-repeat="document in vm.searchResults " ng-click="home.go(document)">
-		    	<md-card>
-		    	<img src=".{{ document.image}}" style="width:150px"></md-card>
+		    	<md-card flex>
+		    		<md-image src=".{{ document.image}}">
+		    	</md-card>
 		      <md-grid-tile-footer>
 		        <md-button class="md-raised">{{document.name}}</md-button>
 		        <strong ng-if="!document.ID_Company">No company attached yet</strong>
