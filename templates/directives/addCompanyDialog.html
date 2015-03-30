@@ -4,14 +4,7 @@
 			<h4 class="md-title" style='padding-left:25px'>Add a new company</h4>
 		</md-toolbar>
 
-		  
-
-  <formly-form model="company" fields="companyFields">
-
-		<button ng-if="company" class="btn btn-success" ng-click="findLogo(); showLogoSearch=true"><i class="glyphicon glyphicon-search"></i> Find Logo</button>
-
-	</formly-form>
-
+	<div ng-include="'templates/directives/addCompany.html'"></div>
 
   </md-content>
   <div class="md-actions">

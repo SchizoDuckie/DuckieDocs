@@ -27,30 +27,8 @@
    
     <md-subheader class="primary">Create a new company</md-subheader>
     <md-card-content style='overflow-y: auto'>
-      <md-list>
-          <md-item>
-          	<md-item-content>
-   
-              <div class="md-tile-left md-tile-top">
-                  <img ng-if="company.image" ng-src=".{{company.image}}" style='height:80px; width:80px' class="circle" title="choose a logo" alt="choose a logo">
+      <company id="{{vm.Document.ID_Company}}" editor></company>
 
-                  <a ng-click="chooseLogo()" style="text-align:center"><ng-md-icon ng-if="!company.image" style="fill: navy; margin: 0 auto" icon="image" size="40"></ng-md-icon><br>Choose a logo</a>
-              </div>
-              <div class="md-tile-content">
-                <formly-form model="vm.Company" fields="vm.companyFields">
-
-					<button ng-if="vm.Company && vm.Company.ID_Company" class="btn btn-success" ng-click="vm.findLogo(); vm.showLogoSearch=true"><i class="glyphicon glyphicon-search"></i> Find Logo</button>
-
-
-				  	<button type="submit" class="btn btn-success" ng-click="vm.saveCompany(); editCompany=false;"><i class="glyphicon glyphicon-key"></i> Save </button>
-
-				</formly-form>
-
-              </div>
-              </md-item-content>
-              </md-item>
-              </md-list>
-           
     </md-card-content>
 </md-card>
 

@@ -66,19 +66,14 @@
       
 
         </md-sidenav>
-        <div layout="column" flex id="content">
+        <div layout="row" flex id="content">
           
-            <div layout="row" flex>
             
-            <md-content layout="column" flex class="md-padding" ui-view="main">
-              
-            </md-content>
+                <md-content layout="column" flex class="md-padding" ui-view="main">
+                  
+                </md-content>
 
-             <md-content layout="column" flex="20" class="md-padding md-whiteframe-z2" ui-view="sidePanel">
-              
-            </md-content>
 
-            </div> 
 
         </div>
     </div>
@@ -137,6 +132,7 @@
   <script src="js/controllers/settings/DisplayCtrl.js"></script>
   <script src="js/controllers/settings/BackupCtrl.js"></script>
 
+  <script src="./js/directives/crudRelationEditor.js"></script>
   <script src="./js/directives/focusWatch.js"></script>
   <script src="./js/directives/sidePanel.js"></script>
   <script src="./js/directives/queryMonitor.js"></script>
