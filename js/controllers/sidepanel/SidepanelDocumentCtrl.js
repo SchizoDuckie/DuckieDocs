@@ -1,3 +1,47 @@
+var CompanyImageSlurper = function(Company) {
+
+    var path = require('path'),
+        fs = require('fs'),
+        baseDir = path.resolve(process.cwd());
+
+    this.Company = Company;
+    this.savePath = baseDir + '/documents/CompanyImages';
+
+    this.setSavePath = function(path) {
+        this.savePath = baseDir + path;
+    }
+
+    this.setCompany = function(company) {
+        this.Company = company;
+    }
+
+    this.save = function(image) {
+        return new Promise(function(resolve, reject) {
+            if (!this.Company.ID_Company) {
+                throw "Company is not persisted yet! Can't save an image";
+            }
+
+            var fileName = this.Company.ID_Company + '-' + new Date().getTime() + '.png';
+
+            if (!fs.existsSync(this.savePath)) {
+                fs.mkdirSync(this.savePath);
+            }
+            var file = fs.createWriteStream(this.savePath + '/' + fileName);
+            file.on('finish', function() {
+                file.close(function() {
+                    this.Company.image = fileName;
+                    this.Company.Persist();
+                    resolve(Company);
+                });
+            });
+            require(image.indexOf('https') == 0 ? 'https' : 'http').get(image, function(response) {
+                response.pipe(file);
+            });
+        })
+    }
+
+}
+
 DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 'GoogleImages',
     function($scope, $state, Document, GoogleImages) {
         var vm = this;
@@ -25,42 +69,11 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
             $scope.$applyAsync();
         }
 
-        this.selectImage = function(image) {
-            console.log("Select company image!", image);
-            var path = require('path'),
-                fs = require('fs'),
-                baseDir = path.resolve(process.cwd()),
-                path = baseDir + '/documents/CompanyImages',
-                fileName = this.Company.ID_Company + '-' + new Date().getTime() + '.png';
-
-            if (!fs.existsSync(path)) {
-                fs.mkdirSync(path);
-            }
-            var file = fs.createWriteStream(path + '/' + fileName);
-            file.on('finish', function() {
-                file.close(function() {
-                    vm.Company.image = fileName;
-                    vm.Company.Persist();
-                    $scope.$applyAsync();
-                });
-            });
-            require(image.indexOf('https') == 0 ? 'https' : 'http').get(image, function(response) {
-                response.pipe(file);
-            });
-        }
-
         this.getCompanyList = function() {
             CRUD.Find('Company').then(function(result) {
                 vm.companies = result;
                 $scope.$applyAsync();
             });
-        }
-
-        this.findLogo = function() {
-            GoogleImages.findLogo(this.Company.name).then(function(result) {
-                vm.imageSuggestions = result;
-                $scope.$applyAsync();
-            })
         }
 
         this.saveCompany = function() {
@@ -70,32 +83,6 @@ DuckieDocs.controller('SidepanelDocumentCtrl', ['$scope', '$state', 'Document', 
 
             });
         }
-
-    this.companyFields = [{
-        key: 'name',
-        type: 'md-input',
-        templateOptions: {
-            type: 'text',
-            label: 'Company Name',
-            placeholder: 'ACME B.V.'
-        }
-    }, {
-        key: 'address',
-        type: 'md-input',
-        templateOptions: {
-            type: 'text',
-            label: 'Address',
-            placeholder: 'Streetname XX'
-        }
-    }, {
-        key: 'country',
-        type: 'md-input',
-        templateOptions: {
-            type: 'text',
-            label: 'Country',
-            placeholder: 'NomansLand'
-        }
-    }];
 
     }
 ]);

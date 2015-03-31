@@ -1,18 +1,15 @@
 <div layout="row">
 	<md-card>
 		 <md-subheader class="primary">{{vm.Document.name }}</md-subheader>
-	    
 				
 		<md-card-content>
 
 			<strong>Filename: </strong>{{ vm.Document.filepath }}<br>
 			<strong>Description: </strong>{{ vm.Document.description }}<br>
-
 			<strong>Last accessed</strong> {{vm.Document.lastAccessed }}<br>
-
 			<strong>Opened count</strong> {{ vm.Document.openedCount }}<br>
 
-			<company id="{{vm.Document.ID_Company}}"></company>
+			<company company="vm.Company"></company>
 
 			<img ng-if="vm.Company.image" src="./documents/CompanyImages/{{vm.Company.image}}">
 

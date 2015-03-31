@@ -4,10 +4,32 @@ DuckieDocs.controller('DocumentCtrl', ['$scope', '$state', 'Document', 'Security
         var vm = this;
 
         this.Document = Document;
-
         this.Document.lastAccessed = new Date().getTime();
         this.Document.openedCount++;
         this.Document.Persist();
+
+        this.Company = new Company();
+
+        if (this.Document.ID_Company) {
+            CRUD.FindOne('Company', {
+                ID_Company: this.Document.ID_Company
+            }).then(function(company) {
+                vm.Company = company;
+                $scope.$applyAsync();
+            })
+        }
+
+        this.save = function() {
+            console.log("Saving document!");
+            this.Document.Persist();
+            debugger;
+        }
+
+        $scope.$on('save', function() {
+            debugger;
+            vm.save();
+
+        })
 
         $scope.pdf = vm.pdf = null;
         console.log('Decrypting PDF', new Date().toTimeString());

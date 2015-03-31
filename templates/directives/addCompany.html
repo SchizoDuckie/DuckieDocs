@@ -2,12 +2,12 @@
       <md-item>
       	<md-item-content>
 			<div class="md-tile-left" style='min-width:150px; text-align: center;'>
-			  <img ng-if="vm.company.image" ng-src=".{{company.image}}" style='height:80px; width:80px' class="circle" title="choose a logo" alt="choose a logo">
+			  <img ng-if="vm.company.image && !vm.imageSuggestions" ng-src=".{{company.image}}" style='height:80px; width:80px' class="circle" title="choose a logo" alt="choose a logo">
 
-			  <a ng-click="vm.chooseLogo()" style="text-align:center"><ng-md-icon ng-if="!company.image && vm.imageSuggestions.length == 0" style="fill: navy; margin: 0 auto" icon="image" size="40"></ng-md-icon>
-			  <img ng-if="vm.imageSuggestions" src='{{vm.imageSuggestions[0]}}' ng-click="vm.selectImage(image);">
+			  <a ng-click="vm.chooseLogo()" style="text-align:center"><ng-md-icon ng-if="!vm.company.image" style="fill: navy; margin: 0 auto" icon="image" size="40"></ng-md-icon>
+			  <img ng-if="vm.imageSuggestions" ng-src='{{vm.imageSuggestions[0]}}' ng-click="vm.selectImage(image);">
 	
-	<br>Find a logo</a>
+				<br>Find a logo</a>
 
 			</div>
 			<div class="md-tile-content">
@@ -15,7 +15,7 @@
 
 				<button ng-if="vm.company && vm.company.ID_Company" class="btn btn-success" ng-click="findLogo();"><i class="glyphicon glyphicon-search"></i> Find Logo</button>
 
-			  	<button type="submit" class="btn btn-success" ng-click="vm.saveCompany(); editCompany=false;"><i class="glyphicon glyphicon-key"></i> Save </button>
+			  	<button ng-if="!vm.hideSaveButton" type="submit" class="btn btn-success" ng-click="vm.saveCompany();"><i class="glyphicon glyphicon-key"></i> Save </button>
 
 			</formly-form>
 			</div>
