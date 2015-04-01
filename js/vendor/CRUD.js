@@ -379,7 +379,7 @@ CRUD.Entity.prototype = {
      */
     getValues: function() {
         var v = this.values;
-        if (this.changedValues && Array.from(this.changedValues).length > 0) {
+        if (this.changedValues && Object.keys(this.changedValues).length > 0) {
             for (var k in this.changedValues) {
                 v[k] = this.changedValues[k];
             }

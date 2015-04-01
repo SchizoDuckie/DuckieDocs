@@ -8,7 +8,8 @@ DuckieDocs
             return iAttr.$attr.editor ? 'templates/directives/addCompany.html' : 'templates/directives/company.html';
         },
         scope: {
-            id: '@'
+            id: '@',
+            company: '@'
         },
         controllerAs: 'vm',
         controller: function($scope, $mdDialog, GoogleImages) {
@@ -23,6 +24,7 @@ DuckieDocs
                     ID_Company: $scope.id
                 }).then(function(result) {
                     $scope.company = vm.company = result;
+                    $scope.$applyAsync();
                 })
             }
 
@@ -36,10 +38,20 @@ DuckieDocs
             }
 
             this.saveCompany = function() {
+                console.log("Save company");
+                if (!this.company.ID_Company) {
+                    vm.isNew = true;
+                }
                 this.company.Persist().then(function() {
                     new HTTPSlurper().save(vm.selectedImage, vm.company.ID_Company + '-' + new Date().getTime() + '.png').then(function(savePath) {
                         vm.company.image = savePath;
-                        vm.company.Persist();
+                        vm.company.Persist().then(function(result) {
+                            if (vm.isNew) {
+                                $scope.$root.$broadcast('Company:created', vm.company);
+                                $scope.$applyAsync();
+                                vm.isNew = false;
+                            }
+                        })
                     });
                 });
             }
@@ -79,11 +91,14 @@ DuckieDocs
 
                         this.closeDialog = function() {
                             console.log('close dialog!');
+                            var isNew = self.company.ID_Company === undefined;
                             self.company.Persist().then(function() {
                                 $mdDialog.hide();
                                 $scope.$applyAsync(function() {
-
                                     $scope.$root.$broadcast('save');
+                                    if (isNew) {
+                                        $scope.$root.$broadcast('Company:created', self.company);
+                                    }
                                 })
                             })
 

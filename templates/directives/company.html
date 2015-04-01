@@ -1,3 +1,5 @@
 <strong> Company:</strong>
- <span ng-if="!vm.company.ID_Company">No company connected yet! <md-button ng-click="vm.addCompany()">Add</md-button></span>
+<span ng-if="!vm.company.ID_Company">No company connected yet! <md-button ng-click="vm.addCompany()">Add</md-button></span>
 <span ng-if="vm.company.ID_Company">{{vm.company.name }}</span>
+
+<img ng-if="vm.company.ID_Company" ng-src=".{{vm.company.image}}">

@@ -21,7 +21,7 @@ var Document = CRUD.define({
         'name'
     ],
 
-    createStatement: 'CREATE TABLE "Documents" ("ID_Document" INTEGER PRIMARY KEY NOT NULL, "ID_DocumentType" INTEGER NULL, "ID_Company" INTEGER DEFAULT NULL,  "ID_DocumentContent" INTEGER DEFAULT NULL,  "name" varchar(255), "documentdate" DATE  NULL, "description" TEXT NULL, "image" VARCHAR(1024) NULL, "filepath" VARCHAR(1024) null, "isConverted" INTEGER(1) default 0, "created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "lastAccessed" TIMESTAMP NULL, "openedCount" INTEGER DEFAULT 0 )',
+    createStatement: 'CREATE TABLE "Documents" ("ID_Document" INTEGER PRIMARY KEY NOT NULL, "ID_DocumentType" INTEGER NULL, "ID_Company" INTEGER DEFAULT NULL,  "ID_DocumentContent" INTEGER DEFAULT NULL,  "name" UNIQUE varchar(255), "documentdate" DATE  NULL, "description" TEXT NULL, "image" VARCHAR(1024) NULL, "filepath" VARCHAR(1024) null, "isConverted" INTEGER(1) default 0, "created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "lastAccessed" TIMESTAMP NULL, "openedCount" INTEGER DEFAULT 0 )',
     adapter: 'dbAdapter',
     defaultValues: {
 

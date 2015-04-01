@@ -119,7 +119,7 @@ DuckieDocs
 
             this.search = function() {
                 vm.searchResults = [];
-                CRUD.EntityManager.getAdapter().db.execute("select Documents.* from FullTextSearch left join Documents on FullTextSearch.ID_Document = Documents.ID_Document where fulltext match ?", [this.searchModel.query]).then(function(result) {
+                CRUD.EntityManager.getAdapter().db.execute("select Documents.* from FullTextSearch left join Documents on FullTextSearch.ID_Document = Documents.ID_Document where fulltext match ? group by Documents.ID_Document", [this.searchModel.query]).then(function(result) {
                     for (var i = 0; i < result.rs.rows.length; i++) {
                         vm.searchResults.push(CRUD.fromCache(Document, result.rs.rows.item(i)));
                     }

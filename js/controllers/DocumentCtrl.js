@@ -22,13 +22,11 @@ DuckieDocs.controller('DocumentCtrl', ['$scope', '$state', 'Document', 'Security
         this.save = function() {
             console.log("Saving document!");
             this.Document.Persist();
-            debugger;
         }
 
-        $scope.$on('save', function() {
-            debugger;
+        $scope.$on('Company:created', function(evt, company) {
+            vm.Document.ID_Company = company.ID_Company;
             vm.save();
-
         })
 
         $scope.pdf = vm.pdf = null;

@@ -9,10 +9,8 @@
 			<strong>Last accessed</strong> {{vm.Document.lastAccessed }}<br>
 			<strong>Opened count</strong> {{ vm.Document.openedCount }}<br>
 
-			<company company="vm.Company"></company>
-
-			<img ng-if="vm.Company.image" src="./documents/CompanyImages/{{vm.Company.image}}">
-
+			<company id="{{vm.Document.ID_Company}}"></company>
+			
 			<h3>Tags:</h3>
 			[add]
 
@@ -20,7 +18,14 @@
 		</md-card-content>
 	</md-card>
 
-	<ng-pdf ng-if="vm.pdf" canvasid="pdf" scale="1.5"></ng-pdf>
+	<md-card ng-if="!vm.showpdf">
+		<md-card-content>
+			<img ng-src=".{{vm.Document.image}}" ng-click="vm.showpdf = true"><br>
+			<md-button ng-click="vm.showpdf = true">Show Full PDF</md-button>
+
+		</md-card-content>
+	</md-card>
+	<ng-pdf ng-if="vm.showpdf && vm.pdf" canvasid="pdf" scale="1.5"></ng-pdf>
 			
 	
 

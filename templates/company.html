@@ -6,3 +6,10 @@
 	<img src=".{{ document.image}}">
 	<strong>{{document.name}}</strong>
 </div>
+
+<h1 ng-if="vm.searchResults.length > 0">Other documents that mention this company</h1> 
+<div ng-repeat="result in vm.searchResults" class="document" ng-click="vm.go(document)" style='display:flex; flex:1'> 
+	<img src=".{{ result.image}}">
+	<strong>{{result.name}}</strong>
+</div>
+
