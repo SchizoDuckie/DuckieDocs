@@ -1,6 +1,6 @@
 DuckieDocs
 ==========
-Free (for personal use) and open-source document manager that semi-automatically encrypts and organizes your files and extracts the text to make the snailmail and important documents you receive over the years but don't want in the could 'googleable' and manageable.
+A document manager that is free (for personal use) and open-source, that semi-automatically encrypts and organizes your files and extracts the text, to make the snailmail and important documents you receive over the years but don't want in the cloud, 'googleable' and manageable.
 
 Ideas / prototyping/todo:
 =========================
